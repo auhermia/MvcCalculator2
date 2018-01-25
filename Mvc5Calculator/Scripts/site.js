@@ -1,16 +1,17 @@
 ﻿// updated 1/14/18 1642
-function Eval(v1, v2, operator) {
-    $.ajax({
-        method: "POST",
-        url: "/Calculator/Evaluate", // /controller/action
-        data: { val },
-        success: function (result) {
-
-        }
-    error: function (error) { }
-        alert(error);
-    });
-}
+//function Eval(v1, v2, operator) {
+//    $.ajax({
+//        method: "POST",
+//        url: "/Calculator/Evaluate", // /controller/action
+//        data: { a: v1, b: v2, operation: operation },
+//        success: function (result) {
+//            bottomDisplay.text(result);
+//        },
+//        error: function (error) { 
+//            alert(error);
+//        }
+//    });
+//}
 
 
 $(document).ready(function () {
@@ -151,27 +152,28 @@ $(document).ready(function () {
 
         // to do: error handling
 
-        function findLength(val) {
-            var valLength = "";
-            if (val != Math.floor(val)) {
-                valLength = val.toString().split('.')[1].length;
-                return valLength;
-                console.log(typeof valLength);
-            }
-            else
-                valLength = "0";
-            return parseFloat(valLength);
-        }
-        var length1 = findLength(value1);
-        var length2 = findLength(value2);
+        //function findLength(val) {
+        //    var valLength = "";
+        //    if (val != Math.floor(val)) {
+        //        valLength = val.toString().split('.')[1].length;
+        //        return valLength;
+        //        console.log(typeof valLength);
+        //    }
+        //    else
+        //        valLength = "0";
+        //    return parseFloat(valLength);
+        //}
+        //var length1 = findLength(value1);
+        //var length2 = findLength(value2);
 
-        valLength = (length1 > length2) ? length1 : length2;
+        //valLength = (length1 > length2) ? length1 : length2;
 
-        topDisplay.text(value2 + " " + operator + " " + value1);
+        //topDisplay.text(value2 + " " + operator + " " + value1);
 
-        result = operate(value2, value1, operator);
+        //result = operate(value2, value1, operator);
+        Eval(v1, v2, operator);
 
-        bottomDisplay.text(result);
+        //bottomDisplay.text(result);
 
         value1 = "";
         value2 = "";

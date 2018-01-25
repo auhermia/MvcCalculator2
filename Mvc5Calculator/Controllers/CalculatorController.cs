@@ -13,5 +13,31 @@ namespace Mvc5Calculator.Controllers
         {
             return View();
         }
+
+        public JsonResult Evaluate(double a, double b, char operation)
+        {
+            double result = 0;
+
+            switch (operation)
+            {
+                case '+':
+                    result = a + b;
+                    break;
+                case '-':
+                    result = a - b;
+                    break;
+                case '×':
+                    result = a * b;
+                    break;
+                case '÷':
+                    result = a / b;
+                    break;
+                    //case '^':
+                    //    result = Math.Pow(a,b);
+                    //    break;
+            }
+
+            return Json(result);
+        }
     }
 }

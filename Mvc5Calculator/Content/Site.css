@@ -1,24 +1,132 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿@import url('https://fonts.googleapis.com/css?family=Oswald');
+
+
+
+*:focus {
+    outline: none;
 }
 
-/* Set padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+* {
+    font-family: 'Oswald';
 }
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
-.dl-horizontal dt {
-    white-space: normal;
+body {
+    background-color: #808080;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
+.menu {
+    margin: auto;
+    background-color: #3e3e3e;
+    width: 400px;
+    height: 600px;
+    border-radius: 5px;
+    padding: 25px;
+    font-family: 'Oswald';
+}
+
+    .menu button {
+        border: 2px solid #808080;
+        border-radius: 15px;
+        background-color: #3e3e3e;
+        font-size: 20px;
+        width: 47%;
+        padding: 10px;
+        color: #808080;
+        margin-left: 5px;
+        margin-right: 5px;
+        margin-top: 7px;
+        text-align: center;
+    }
+
+
+/* ======== CALCULATOR ======== */
+
+.maindisplay {
+    width: 350px;
+    height: 75px;
+    margin: auto;
+    background-color: #efefef;
+    border-radius: 5px;
+    padding: 10px;
+    color: #3e3e3e;
+}
+
+#topdisplay {
+    text-align: left;
+    font-size: 20px;
+}
+
+#bottomdisplay {
+    text-align: right;
+    font-size: 40px;
+}
+
+div .row {
+    display: flex;
+    padding: 10px;
+}
+
+.row button {
+    border: 2px solid #808080;
+    border-radius: 15px;
+    background-color: #3e3e3e;
+    font-size: 25px;
+    width: 25%;
+    height: 30%;
+    padding: 10px;
+    color: #808080;
+    margin-left: 5px;
+    margin-right: 5px;
+    text-align: center;
+}
+
+button:hover {
+    color: #3e3e3e;
+    background-color: #808080;
+}
+
+
+/* ======== UNIT CONVERTER ======== */
+
+.converter {
+    width: 350px;
+    height: 410px;
+    margin: auto;
+    margin-top: 25%;
+}
+
+select {
+    width: 45%;
+    background-color: #efefef;
+    font-size: 20px;
+}
+
+#type {
+    width: 90%;
+    background-color: #efefef;
+    font-size: 25px;
+}
+
+
+input {
+    width: 45%;
+    background-color: #3e3e3e;
+    color: #808080;
+    border: 2px solid #3e3e3e;
+    border-bottom: 2px solid #808080;
+    font-size: 20px;
+}
+
+p {
+    color: #808080;
+    font-size: 25px;
+    text-align: center;
+}
+
+#convert_equal {
+    width: 70%;
+    margin-bottom: 15%;
+    margin-top: 15%;
+    margin-left: 15%;
+    margin-right: 15%;
 }

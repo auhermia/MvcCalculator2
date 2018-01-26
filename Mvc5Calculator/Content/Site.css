@@ -1,7 +1,5 @@
 ﻿@import url('https://fonts.googleapis.com/css?family=Oswald');
 
-
-
 *:focus {
     outline: none;
 }
@@ -21,62 +19,62 @@ body {
     height: 40em;
     border-radius:.3em;
     padding: 1.5em;
-    font-family: 'Oswald';
+    /*font-family: 'Oswald';*/
 }
 
-    .menu button {
-        border: .125em solid #808080;
-        border-radius: 1em;
-        background-color: #3e3e3e;
-        font-size: 1.25em;
-        width: 45%;
-        padding: .6em;
-        color: #808080;
-        /*margin-left: 5px;
-        margin-right: 5px;
-        margin-top: 7px;*/
-        text-align: center;
-    }
+.menu button {
+    border: .125em solid #808080;
+    border-radius: 1em;
+    background-color: #3e3e3e;
+    font-size: 1.25em;
+    width: 45%;
+    padding: .6em;
+    color: #808080;
+    /*margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 7px;*/
+    text-align: center;
+}
 
 
 /* ======== CALCULATOR ======== */
 
 .maindisplay {
     width: 25em;
-    height: 5em;
+    height: 6em;
     margin: auto;
     background-color: #efefef;
     border-radius: .3em;
-    padding: 10px;
+    padding: .6em;
     color: #3e3e3e;
 }
 
 #topdisplay {
     text-align: left;
-    font-size: 20px;
+    font-size: 1.25em;
 }
 
 #bottomdisplay {
     text-align: right;
-    font-size: 40px;
+    font-size: 2.5em;
 }
 
 div .row {
     display: flex;
-    padding: 10px;
+    padding: .6em;
 }
 
 .row button {
-    border: 2px solid #808080;
-    border-radius: 15px;
+    border: .125em solid #808080;
+    border-radius: 1em;
     background-color: #3e3e3e;
-    font-size: 25px;
+    font-size: 1.5em;
     width: 25%;
     height: 30%;
-    padding: 10px;
+    padding: .6em;
     color: #808080;
-    margin-left: 5px;
-    margin-right: 5px;
+    margin-left: .3em;
+    margin-right: .3em;
     text-align: center;
 }
 
@@ -85,41 +83,39 @@ button:hover {
     background-color: #808080;
 }
 
-
 /* ======== UNIT CONVERTER ======== */
 
 .converter {
-    width: 350px;
-    height: 410px;
+    width: 22em;
+    height: 25em;
     margin: auto;
-    margin-top: 25%;
+    margin-top: 15%;
 }
 
 select {
     width: 45%;
     background-color: #efefef;
-    font-size: 20px;
+    font-size: 1.25em;
 }
 
 #type {
     width: 90%;
     background-color: #efefef;
-    font-size: 25px;
+    font-size: 1.5em;
 }
-
 
 input {
     width: 45%;
     background-color: #3e3e3e;
     color: #808080;
-    border: 2px solid #3e3e3e;
+    border: .125em solid #3e3e3e;
     border-bottom: 2px solid #808080;
-    font-size: 20px;
+    font-size: 1.25em;
 }
 
 p {
     color: #808080;
-    font-size: 25px;
+    font-size: 1.5em;
     text-align: center;
 }
 

@@ -1,18 +1,4 @@
-﻿// updated 1/14/18 1642
-//function Eval(v1, v2, operator) {
-//    $.ajax({
-//        method: "POST",
-//        url: "/Calculator/Evaluate", // /controller/action
-//        data: { a: v1, b: v2, operation: operation },
-//        success: function (result) {
-//            bottomDisplay.text(result);
-//        },
-//        error: function (error) { 
-//            alert(error);
-//        }
-//    });
-//}
-
+﻿// updated 1/27/18 2300
 
 $(document).ready(function () {
 
@@ -41,16 +27,16 @@ $(document).ready(function () {
 
     // converion unit mapping
     var area = [
-        { 'Id': 'm2', 'Property': [1.0, 'Square meter (m^2)'] },
-        { 'Id': 'cm2', 'Property': [10000, 'Square centimeter (cm^2)'] },
-        { 'Id': 'km2', 'Property': [0.000001, 'Square kilometer (km^2)'] },
-        { 'Id': 'in2', 'Property': [1550, 'Square inch (in^2)'] },
-        { 'Id': 'ft2', 'Property': [10.7639, 'Square foot (ft^2)'] },
-        { 'Id': 'mi2', 'Property': [3.861e-7, 'Square mile (mi^2)'] },
+        { 'Id': 'm2',   'Property': [1.0, 'Square meter (m^2)'] },
+        { 'Id': 'cm2',  'Property': [10000, 'Square centimeter (cm^2)'] },
+        { 'Id': 'km2',  'Property': [0.000001, 'Square kilometer (km^2)'] },
+        { 'Id': 'in2',  'Property': [1550, 'Square inch (in^2)'] },
+        { 'Id': 'ft2',  'Property': [10.7639, 'Square foot (ft^2)'] },
+        { 'Id': 'mi2',  'Property': [3.861e-7, 'Square mile (mi^2)'] },
         { 'Id': 'acre', 'Property': [0.000247105, 'Acre (acre)'] }
     ];
     var length = [
-        { 'Id': 'm', 'Property': [1.0, 'Meter (m)'] },
+        { 'Id': 'm',  'Property': [1.0, 'Meter (m)'] },
         { 'Id': 'cm', 'Property': [100, 'Centimeter (cm)'] },
         { 'Id': 'km', 'Property': [.001, 'Kilometer (km)'] },
         { 'Id': 'in', 'Property': [39.36996, 'Inch (in)'] },
@@ -60,23 +46,23 @@ $(document).ready(function () {
     ];
     var mass = [
         { 'Id': 'kg', 'Property': [1.0, 'Kilogram (kg)'] },
-        { 'Id': 'g', 'Property': [1000, 'Gram (g)'] },
+        { 'Id': 'g',  'Property': [1000, 'Gram (g)'] },
         { 'Id': 'oz', 'Property': [35.274, 'Ounce (oz)'] },
         { 'Id': 'lb', 'Property': [2.20462, 'Pound (lb)'] },
-        { 'Id': 't', 'Property': [0.00110231, 'Ton (t)'] }
+        { 'Id': 't',  'Property': [0.00110231, 'Ton (t)'] }
     ];
     var time = [
-        { 'Id': 'd', 'Property': [1.0, 'Day (d)'] },
-        { 'Id': 'h', 'Property': [24, 'Hour (h)'] },
+        { 'Id': 'd',   'Property': [1.0, 'Day (d)'] },
+        { 'Id': 'h',   'Property': [24, 'Hour (h)'] },
         { 'Id': 'min', 'Property': [1440, 'Minute (min)'] },
         { 'Id': 'sec', 'Property': [86400, 'Second (sec)'] },
-        { 'Id': 'w', 'Property': [0.142857, 'Week (w)'] },
-        { 'Id': 'm', 'Property': [0.0328767, 'Month (m)'] },
-        { 'Id': 'yr', 'Property': [0.00273973, 'Year (yr)'] }
+        { 'Id': 'w',   'Property': [0.142857, 'Week (w)'] },
+        { 'Id': 'm',   'Property': [0.0328767, 'Month (m)'] },
+        { 'Id': 'yr',  'Property': [0.00273973, 'Year (yr)'] }
     ];
     var volume = [
-        { 'Id': 'l', 'Property': [1.0, 'Liter (L)'] },
-        { 'Id': 'mL', 'Property': [1000, 'Milliliter (mL)'] },
+        { 'Id': 'l',   'Property': [1.0, 'Liter (L)'] },
+        { 'Id': 'mL',  'Property': [1000, 'Milliliter (mL)'] },
         { 'Id': 'gal', 'Property': [0.264172, 'Gallon (gal)'] }
     ];
     // to do: need to fix calculation ?
@@ -119,6 +105,7 @@ $(document).ready(function () {
         }
     });
 
+    // positive/negative values
     $('#signop').click(function () {
         value1 = value1 * -1;
         bottomDisplay.text(value1);
@@ -168,12 +155,13 @@ $(document).ready(function () {
 
         //valLength = (length1 > length2) ? length1 : length2;
 
-        //topDisplay.text(value2 + " " + operator + " " + value1);
-
         //result = operate(value2, value1, operator);
-        Eval(v1, v2, operator);
 
-        //bottomDisplay.text(result);
+        topDisplay.text(value2 + " " + operator + " " + value1);
+
+        Eval(value2, value1, operator);
+
+        bottomDisplay.text(result);
 
         value1 = "";
         value2 = "";
@@ -181,17 +169,21 @@ $(document).ready(function () {
         calcFirst = false;
     });
 
-    function operate(a, b, operation) {
-        a = parseFloat(a);
-        b = parseFloat(b);
-        if (operation === '+') { return a + b };
-        if (operation === '-') { return a - b };
-        if (operation === '×') { return a * b };
-        if (operation === '÷') { return a / b };
-        if (operation === '^') return Math.pow(a, b);
+    function Eval(v2, v1, operator) {
+        $.ajax({
+            method: "POST",
+            url: "/Calculator/Evaluate", // /controller/action
+            data: { a: value2, b: value1, operation: operator },
+            success: function (result) {
+                bottomDisplay.text(result);
+            },
+            error: function (error) {
+                alert(error);
+            }
+        });
     }
 
-    // Clear
+    // Clear everything
     $('#clear').click(function () {
         value1 = "";
         value2 = "";

@@ -3,18 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Mvc5Calculator.Models;
+using System.Data.Entity;
 
 namespace Mvc5Calculator.Controllers
 {
     public class CalculatorController : Controller
     {
+        private CalculatorDBContext db = new CalculatorDBContext();
+
         // GET: Calculator
         public ActionResult Index()
         {
             return View();
         }
 
-        public JsonResult Evaluate(double a, double b, char operation)
+        public JsonResult Evaluate(float a, float b, char operation)
         {
             double result = 0;
 
@@ -36,8 +40,15 @@ namespace Mvc5Calculator.Controllers
                     //    result = Math.Pow(a,b);
                     //    break;
             }
-
+            System.Diagnostics.Debug.WriteLine("RESULT IS " + result + " " + a + " " + b);
             return Json(result);
+        }
+
+        public ActionResult SaveRecord(Calculator model)
+        {
+            Calculator calc = new Calculator();
+            calc.Operand1 = model.Operand1;
+            return View(model);
         }
     }
 }

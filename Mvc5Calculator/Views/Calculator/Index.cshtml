@@ -1,4 +1,6 @@
 ﻿
+@model IEnumerable<Mvc5Calculator.Models.Calculator>
+    
 @{
     ViewBag.Title = "Calculator";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -9,75 +11,91 @@
 
 <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="Site.css" />    
+   @* <link rel="stylesheet" href="Site.css" />*@
+    <link href="~/Content/StyleSheet1.css" rel="stylesheet" />   
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    
     <script src="~/Scripts/site.js"></script>
     <title>Calculator</title>
 </head>
 
 <body>
-    <div class="menu">
-        <!-- =============== CALCULATOR =============== -->
-        <div id="calculator">
-            <div class="maindisplay">
-                <div id="topdisplay"></div>
-                <div id="bottomdisplay"></div>
+    <div class="container">
+        <!--PANEL 1-->
+        <div class="menu">
+            <!-- =============== CALCULATOR =============== -->
+            <div id="calculator">
+                <div class="maindisplay">
+                    <div id="topdisplay"></div>
+                    <div id="bottomdisplay"></div>
+                </div>
+                <div class="row">
+                    <button id="clear">C</button>
+                    <button id="sqrt" class="operator">&#8730</button>
+                    <button id="expo" class="operator">^</button>
+                    <button class="operator">&#247</button>
+                </div>
+                <div class="row">
+                    <button class="num">7</button>
+                    <button class="num">8</button>
+                    <button class="num">9</button>
+                    <button class="operator">&#215</button>
+                </div>
+                <div class="row">
+                    <button class="num">4</button>
+                    <button class="num">5</button>
+                    <button class="num">6</button>
+                    <button class="operator">-</button>
+                </div>
+                <div class="row">
+                    <button class="num">1</button>
+                    <button class="num">2</button>
+                    <button class="num">3</button>
+                    <button class="operator">+</button>
+                </div>
+                <div class="row">
+                    <button class="num">0</button>
+                    <button id="decimal" class="num">.</button>
+                    <button id="signop" class="operator">&#177</button>
+                    <button id="equal" class="operator">=</button>
+                </div>
             </div>
-            <div class="row">
-                <button id="clear">C</button>
-                <button id="sqrt" class="operator">&#8730</button>
-                <button id="expo" class="operator">^</button>
-                <button class="operator">&#247</button>
+            <!-- =============== UNIT CONVERTER =============== -->
+            <div id="converter" class="converter">
+                <select id="type">
+                    <option>Length</option>
+                    <option>Mass</option>
+                    <option>Temperature</option>
+                    <option>Time</option>
+                    <option>Volume</option>
+                </select>
+                <!-- From -->
+                <p>FROM:</p>
+                <input id="from" type="text" />
+                <select id="fromUnit"></select>
+                <!-- To -->
+                <p>TO:</p>
+                <input id="to" type="text" />
+                <select id="toUnit"></select>
+                <button id="convert_equal">Convert</button>
             </div>
-            <div class="row">
-                <button class="num">7</button>
-                <button class="num">8</button>
-                <button class="num">9</button>
-                <button class="operator">&#215</button>
-            </div>
-            <div class="row">
-                <button class="num">4</button>
-                <button class="num">5</button>
-                <button class="num">6</button>
-                <button class="operator">-</button>
-            </div>
-            <div class="row">
-                <button class="num">1</button>
-                <button class="num">2</button>
-                <button class="num">3</button>
-                <button class="operator">+</button>
-            </div>
-            <div class="row">
-                <button class="num">0</button>
-                <button id="decimal" class="num">.</button>
-                <button id="signop" class="operator">&#177</button>
-                <button id="equal" class="operator">=</button>
-            </div>
+            <button id="calcbutton">Calculator</button>
+            <button id="convertbutton">Unit Conversion</button>
         </div>
-        <!-- =============== UNIT CONVERTER =============== -->
-        <div id="converter" class="converter">
-            <select id="type">
-                <option id="0">Length</option>
-                <option id="1">Mass</option>
-                <option id="2">Temperature</option>
-                <option id="3">Time</option>
-                <option id="4">Volume</option>
-            </select>
-            <!-- From -->
-            <p>FROM:</p>
-            <input id="from" type="text" />
-            <select id="fromUnit"></select>
-            <!-- To -->
-            <p>TO:</p>
-            <input id="to" type="text" />
-            <select id="toUnit"></select>
-            <button id="convert_equal">Convert</button>
-        </div>
-        <button id="calcbutton">Calculator</button>
-        <button id="convertbutton">Unit Conversion</button>
+        <!--PANEL 2-->
+        <div class="memory">
+            <div class="expression">
+                <div id="op2"></div>
+                <div id="oper"></div>
+                <div id="op1"></div>
+                <div id="op1"></div>
+                @foreach
 
+            </div>
+
+            <button id="clearMem">Clear Memory</button>
+        </div>
     </div>
+    
 </body>
 
 </html>

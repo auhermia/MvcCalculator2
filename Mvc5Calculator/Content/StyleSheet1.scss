@@ -1,0 +1,143 @@
+﻿@import url('https://fonts.googleapis.com/css?family=Oswald');
+
+$darkgray: #3e3e3e;
+$lightgray: #808080;
+$offwhite: #efefef;
+$border: .125em solid #808080;
+$borderrad: 1em;
+$btnpadding: .6em;
+
+@mixin stdbutton($fontsize, $width) {
+    border: $border;
+    border-radius: $borderrad;
+    background-color: $darkgray;
+    padding: $btnpadding;
+    color: $lightgray;
+    text-align: center;
+    font-size: $fontsize;
+    width: $width;
+}
+
+@mixin dropdown ($dropdownwidth, $fontsize){
+    background-color: $offwhite;
+    width: $dropdownwidth;
+    font-size: $fontsize;
+} 
+@mixin display($textalign, $fontsize){
+    text-align: $textalign;
+    font-size: $fontsize;
+}
+
+
+* {
+    font-family: 'Oswald';
+    &:focus {
+        outline: none;
+    }
+}
+
+body {
+    background-color: $lightgray;
+}
+
+input {
+    width: 45%;
+    background-color: $darkgray;
+    color: $lightgray;
+    border: .125em solid $darkgray; // to hide border, show only bottom
+    border-bottom: 2px solid $lightgray;
+    font-size: 1.25em;
+}
+
+p {
+    color: $lightgray;
+    font-size: 1.5em;
+    text-align: center;
+    margin-top: 1em;
+}
+
+select {
+    @include dropdown(45%, 1.25em);
+}
+.container{
+    margin: auto;
+    width:60em;
+    height: 40em;
+}
+.menu {
+    float: left;
+    background-color: $darkgray;
+    width: 30em;
+    height: 40em;
+    border-radius: .3em;
+    padding: 1.5em;
+
+    button {
+        @include stdbutton(1.25em, 45%);
+    }
+}
+
+button:hover {
+    color: $lightgray;
+    background-color: $darkgray;
+}
+
+/* ======== CALCULATOR ======== */
+
+.maindisplay {
+    width: 25em;
+    height: 6em;
+    margin: auto;
+    background-color: $offwhite;
+    border-radius: .3em;
+    padding: .6em;
+    color: $darkgray; // text color
+    #topdisplay {
+        @include display(left, 1.25em);
+    }
+    #bottomdisplay {
+        @include display(right, 2.5em);
+    }
+}
+
+.row {
+    display: flex;
+    padding: .6em;
+    button {
+        @include stdbutton(1.5em, 25%);
+        height: 30%;
+        margin-left: .3em;
+        margin-right: .3em;
+    }
+}
+
+/* ======== UNIT CONVERTER ======== */
+
+.converter {
+    width: 19em;
+    height: 25.6em;
+    margin: auto;
+    margin-top: 20%;
+}
+
+#type {
+    @include dropdown(90%, 1.5em);
+}
+
+#convert_equal {
+    width: 70%;
+    margin: 15% 15% 15% 15%;
+}
+
+/* ======== MEMORY ======== */
+
+.memory {
+    overflow: scroll;
+    //width: 30em;
+    height: 40em;
+
+    button {
+        @include stdbutton(1em, 80%);
+    }
+}
+

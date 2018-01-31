@@ -172,7 +172,7 @@ $(document).ready(function () {
     function Eval(v2, v1, operator) {
         $.ajax({
             method: "POST",
-            url: "/Calculator/Evaluate", // /controller/action
+            url: "/Calculator/Evaluate",
             data: { a: value2, b: value1, operation: operator },
             success: function (result) {
                 bottomDisplay.text(result);

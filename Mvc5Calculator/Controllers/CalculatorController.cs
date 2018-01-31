@@ -44,11 +44,6 @@ namespace Mvc5Calculator.Controllers
             return Json(result);
         }
 
-        public ActionResult SaveRecord(Calculator model)
-        {
-            Calculator calc = new Calculator();
-            calc.Operand1 = model.Operand1;
-            return View(model);
-        }
+        
     }
 }

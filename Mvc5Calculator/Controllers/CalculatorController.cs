@@ -44,6 +44,29 @@ namespace Mvc5Calculator.Controllers
             return Json(result);
         }
 
+        [HttpPost]
+        public ActionResult SaveResult(Calculator model)
+        {
+            try
+            {
+                Calculator calculator = new Calculator();
+                calculator.Operand1 = model.Operand1;
+                calculator.Operand2 = model.Operand2;
+                calculator.Operator = model.Operator;
+                calculator.Result = model.Result;
+
+                db.Calulator.Add(calculator);
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+
+            return RedirectToAction("Index");
+        }
+
         
     }
 }

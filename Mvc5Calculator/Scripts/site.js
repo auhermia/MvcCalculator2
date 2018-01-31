@@ -181,6 +181,15 @@ $(document).ready(function () {
                 alert(error);
             }
         });
+
+        $.ajax({
+            method: "POST",
+            url: "/Calculator/Index",
+            data: { value2, value1, operator },
+            success: function (response) {
+                alert("Test Result");
+            }
+        })
     }
 
     // Clear everything

@@ -184,8 +184,8 @@ $(document).ready(function () {
 
         $.ajax({
             method: "POST",
-            url: "/Calculator/Index",
-            data: { value2, value1, operator },
+            url: "/Calculator/AddCalc",
+            data: { Operand1: value2, Operand1: value1, Operator: operator/*, Result: result*/ },
             success: function (response) {
                 alert("Test Result");
             }

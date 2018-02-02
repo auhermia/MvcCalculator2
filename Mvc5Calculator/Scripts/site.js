@@ -97,7 +97,8 @@ $(document).ready(function () {
 
     // retrieves text of num key entered and show on display
     $('.num').click(function () {
-        value1 += $(this).text();
+        let self = this;
+        value1 += $(self).text();
         bottomDisplay.text(value1);
         if (operator == '') {
             calcFirst = true;
@@ -125,7 +126,8 @@ $(document).ready(function () {
 
     // + - * / ^
     $(".operator").not('#equal,#signop,#sqrt').click(function () {
-        operator = $(this).text();
+        let self = this;
+        operator = $(self).text();
         if (calcFirst == false) {
             value1 = result;
         }
@@ -176,21 +178,23 @@ $(document).ready(function () {
             data: { a: value2, b: value1, operation: operator },
             success: function (result) {
                 bottomDisplay.text(result);
+                
             },
             error: function (error) {
                 alert(error);
             }
         });
-
-        $.ajax({
-            method: "POST",
-            url: "/Calculator/AddCalc",
-            data: { Operand1: value2, Operand1: value1, Operator: operator/*, Result: result*/ },
-            success: function (response) {
-                alert("Test Result");
-            }
-        })
     }
+
+    // if Calculation = success -> add to db
+    $.ajax({
+        method: "POST",
+        url: "/Calculator/AddCalc",
+        data: { Operand1: value2, Operand1: value1, Operator: operator/*, Result: result*/ },
+        success: function (response) {
+            alert("Test Result");
+        }
+    });
 
     // Clear everything
     $('#clear').click(function () {

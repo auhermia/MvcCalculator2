@@ -97,8 +97,8 @@ $(document).ready(function () {
 
     // retrieves text of num key entered and show on display
     $('.num').click(function () {
-        let self = this;
-        value1 += $(self).text();
+        let self = $(this);
+        value1 += self.text();
         bottomDisplay.text(value1);
         if (operator == '') {
             calcFirst = true;
@@ -114,20 +114,21 @@ $(document).ready(function () {
 
     // square root
     $('#sqrt').click(function () {
+        let self = $(this);
         if (calcFirst == false) {
             value1 = result;
         }
         value1n = parseFloat(value1);
         result = Math.sqrt(value1n);
-        topDisplay.text($(this).text() + value1);
+        topDisplay.text(self.text() + value1);
         bottomDisplay.text(result);
         value1 = "";
     });
 
     // + - * / ^
     $(".operator").not('#equal,#signop,#sqrt').click(function () {
-        let self = this;
-        operator = $(self).text();
+        var self = $(this);
+        operator = self.text();
         if (calcFirst == false) {
             value1 = result;
         }
@@ -163,6 +164,16 @@ $(document).ready(function () {
 
         Eval(value2, value1, operator);
 
+        // if Calculation = success -> add to db
+        $.ajax({
+            method: "POST",
+            url: "/Calculator/AddCalc",
+            data: { Operand1: value2, Operand2: value1, Operator: operator/*, Result: result*/ },
+            success: function (response) {
+                alert("Test Result");
+            }
+        });
+
         bottomDisplay.text(result);
 
         value1 = "";
@@ -178,7 +189,6 @@ $(document).ready(function () {
             data: { a: value2, b: value1, operation: operator },
             success: function (result) {
                 bottomDisplay.text(result);
-                
             },
             error: function (error) {
                 alert(error);
@@ -186,15 +196,7 @@ $(document).ready(function () {
         });
     }
 
-    // if Calculation = success -> add to db
-    $.ajax({
-        method: "POST",
-        url: "/Calculator/AddCalc",
-        data: { Operand1: value2, Operand1: value1, Operator: operator/*, Result: result*/ },
-        success: function (response) {
-            alert("Test Result");
-        }
-    });
+
 
     // Clear everything
     $('#clear').click(function () {

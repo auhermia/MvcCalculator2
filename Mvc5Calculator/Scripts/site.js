@@ -160,21 +160,20 @@ $(document).ready(function () {
 
         //result = operate(value2, value1, operator);
 
-        topDisplay.text(value2 + " " + operator + " " + value1);
-
+              
         Eval(value2, value1, operator);
+        result = bottomDisplay.text();
+        console.log(typeof operator)
 
         // if Calculation = success -> add to db
         $.ajax({
             method: "POST",
             url: "/Calculator/AddCalc",
-            data: { Operand1: value2, Operand2: value1, Operator: operator/*, Result: result*/ },
+            data: { Operand1: value2, Operand2: value1, Operator: operator, Result: result },
             success: function (response) {
-                alert("Test Result");
+                alert("Test Result " + result);
             }
         });
-
-        bottomDisplay.text(result);
 
         value1 = "";
         value2 = "";
@@ -185,9 +184,11 @@ $(document).ready(function () {
     function Eval(v2, v1, operator) {
         $.ajax({
             method: "POST",
+            async: false,
             url: "/Calculator/Evaluate",
             data: { a: value2, b: value1, operation: operator },
             success: function (result) {
+                topDisplay.text(value2 + " " + operator + " " + value1);
                 bottomDisplay.text(result);
             },
             error: function (error) {
@@ -196,9 +197,22 @@ $(document).ready(function () {
         });
     }
 
+    // Clear Memory
+    $("#clearMem").click(function () {
+        // clear Memory display
+        // ajax call to db to delete all records 
+        $.ajax({
+            method: "POST",
+            url: "/Calculator/Delete",
+            success: function () {
+
+            }
+        })
+    });
 
 
-    // Clear everything
+
+    // Clear everything on display
     $('#clear').click(function () {
         value1 = "";
         value2 = "";

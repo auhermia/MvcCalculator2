@@ -12,7 +12,7 @@ namespace Mvc5Calculator.Models
         public int Id { get; set; }
         public float Operand1 { get; set; }
         public float Operand2 { get; set; }
-        public char Operator { get; set; }
+        public string Operator { get; set; }
         public float Result { get; set; }
     }
 

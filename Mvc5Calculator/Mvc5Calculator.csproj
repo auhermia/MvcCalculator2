@@ -153,6 +153,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201802011118351_InitialCreate.cs" />
+    <Compile Include="Migrations\201802011118351_InitialCreate.Designer.cs">
+      <DependentUpon>201802011118351_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802060434558_UpdatedModel.cs" />
+    <Compile Include="Migrations\201802060434558_UpdatedModel.Designer.cs">
+      <DependentUpon>201802060434558_UpdatedModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Calculator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -211,7 +220,14 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Calculator\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201802011118351_InitialCreate.resx">
+      <DependentUpon>201802011118351_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802060434558_UpdatedModel.resx">
+      <DependentUpon>201802060434558_UpdatedModel.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
   </ItemGroup>

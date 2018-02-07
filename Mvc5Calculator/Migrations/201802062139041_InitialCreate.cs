@@ -14,6 +14,7 @@ namespace Mvc5Calculator.Migrations
                         Id = c.Int(nullable: false, identity: true),
                         Operand1 = c.Single(nullable: false),
                         Operand2 = c.Single(nullable: false),
+                        Operator = c.String(),
                         Result = c.Single(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);

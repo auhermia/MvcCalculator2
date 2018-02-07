@@ -9,9 +9,7 @@ namespace Mvc5Calculator.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
-            AutomaticMigrationDataLossAllowed = true;
-            ContextKey = "Mvc5Calculator.Models.CalculatorDBContext";
+            AutomaticMigrationsEnabled = false;
         }
 
         protected override void Seed(Mvc5Calculator.Models.CalculatorDBContext context)

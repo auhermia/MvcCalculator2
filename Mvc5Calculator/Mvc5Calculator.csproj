@@ -150,26 +150,19 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CalculatorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TestCalculatorsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201802011118351_InitialCreate.cs" />
-    <Compile Include="Migrations\201802011118351_InitialCreate.Designer.cs">
-      <DependentUpon>201802011118351_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201802060434558_UpdatedModel.cs" />
-    <Compile Include="Migrations\201802060434558_UpdatedModel.Designer.cs">
-      <DependentUpon>201802060434558_UpdatedModel.cs</DependentUpon>
+    <Compile Include="Migrations\201802062139041_InitialCreate.cs" />
+    <Compile Include="Migrations\201802062139041_InitialCreate.Designer.cs">
+      <DependentUpon>201802062139041_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Calculator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\Database1.mdf" />
-    <Content Include="App_Data\Database1_log.ldf">
-      <DependentUpon>Database1.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\StyleSheet1.css">
@@ -219,14 +212,12 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Calculator\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201802011118351_InitialCreate.resx">
-      <DependentUpon>201802011118351_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201802060434558_UpdatedModel.resx">
-      <DependentUpon>201802060434558_UpdatedModel.cs</DependentUpon>
-    </EmbeddedResource>
+    <Content Include="Views\TestCalculators\Create.cshtml" />
+    <Content Include="Views\TestCalculators\Delete.cshtml" />
+    <Content Include="Views\TestCalculators\Details.cshtml" />
+    <Content Include="Views\TestCalculators\Edit.cshtml" />
+    <Content Include="Views\TestCalculators\Index.cshtml" />
+    <Content Include="Views\TestCalculators\IndexTest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -240,6 +231,14 @@
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201802062139041_InitialCreate.resx">
+      <DependentUpon>201802062139041_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

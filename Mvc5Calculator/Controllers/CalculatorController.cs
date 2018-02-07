@@ -17,16 +17,7 @@ namespace Mvc5Calculator.Controllers
         // GET: Calculator
         public ActionResult Index()
         {
-            //var calculations = from calc in db.Calulator
-            //                   select new Calculator
-            //                   {
-            //                       Operand1 = calc.Operand1,
-            //                       Operand2 = calc.Operand2,
-            //                       Result = calc.Result,
-            //                       Operator = calc.Operator
-            //                   };
-            //return View(calculations);
-            return View();
+            return View(db.Calculator.ToList());
         }
 
         public JsonResult Evaluate(float a, float b, char operation)
@@ -70,7 +61,7 @@ namespace Mvc5Calculator.Controllers
                 calcObj.Operator = Operator;
                 calcObj.Result = Result;
                 
-                db.Calulator.Add(calcObj);
+                db.Calculator.Add(calcObj);
                 db.SaveChanges();
             }
             catch (Exception ex)
@@ -80,10 +71,11 @@ namespace Mvc5Calculator.Controllers
             return RedirectToAction("Index") ;
         }
 
+        [HttpPost]
         public ActionResult Delete()
         {
-
-
+            db.Calculator.RemoveRange(db.Calculator);
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
                 

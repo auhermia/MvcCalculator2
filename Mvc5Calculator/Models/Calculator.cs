@@ -19,6 +19,6 @@ namespace Mvc5Calculator.Models
     // handles connecting to db and mapping Calculator Objs to db records
     public class CalculatorDBContext : DbContext
     {
-        public DbSet<Calculator> Calulator { get; set; }
+        public DbSet<Calculator> Calculator { get; set; }
     }
 }

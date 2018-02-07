@@ -97,7 +97,7 @@ $(document).ready(function () {
 
     // retrieves text of num key entered and show on display
     $('.num').click(function () {
-        let self = $(this);
+        var self = $(this);
         value1 += self.text();
         bottomDisplay.text(value1);
         if (operator == '') {
@@ -114,7 +114,7 @@ $(document).ready(function () {
 
     // square root
     $('#sqrt').click(function () {
-        let self = $(this);
+        var self = $(this);
         if (calcFirst == false) {
             value1 = result;
         }
@@ -163,7 +163,7 @@ $(document).ready(function () {
               
         Eval(value2, value1, operator);
         result = bottomDisplay.text();
-        console.log(typeof operator)
+        console.log(typeof operator);
 
         // if Calculation = success -> add to db
         $.ajax({
@@ -190,6 +190,7 @@ $(document).ready(function () {
             success: function (result) {
                 topDisplay.text(value2 + " " + operator + " " + value1);
                 bottomDisplay.text(result);
+                $(".expression").text(value2 + " " + operator + " " + value1 + " = " + result);
             },
             error: function (error) {
                 alert(error);
@@ -205,12 +206,10 @@ $(document).ready(function () {
             method: "POST",
             url: "/Calculator/Delete",
             success: function () {
-
+                $(".expression").hide();
             }
         })
     });
-
-
 
     // Clear everything on display
     $('#clear').click(function () {

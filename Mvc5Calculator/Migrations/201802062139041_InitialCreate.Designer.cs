@@ -7,13 +7,13 @@ namespace Mvc5Calculator.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class UpdatedModel : IMigrationMetadata
+    public sealed partial class InitialCreate : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(UpdatedModel));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialCreate));
         
         string IMigrationMetadata.Id
         {
-            get { return "201802060434558_UpdatedModel"; }
+            get { return "201802062139041_InitialCreate"; }
         }
         
         string IMigrationMetadata.Source

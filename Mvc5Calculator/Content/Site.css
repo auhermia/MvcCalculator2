@@ -1,4 +1,6 @@
-﻿@import url('https://fonts.googleapis.com/css?family=Oswald');
+﻿/* outdated - use stylesheet1.css when webcompiler is unavailable*/
+
+@import url('https://fonts.googleapis.com/css?family=Oswald');
 
 *:focus {
     outline: none;
@@ -125,3 +127,11 @@ p {
     margin-left: 15%;
     margin-right: 15%;
 }
+
+
+/* ADD TO SCSS LATER */
+
+/*expression {
+    text-align: center;
+    font-size: 1.5em;
+}*/

@@ -1,0 +1,24 @@
+﻿@model IEnumerable<Mvc5Calculator.Models.Calculator>
+
+<link href="~/Content/StyleSheet1.css" rel="stylesheet" />
+
+@foreach (var item in Model)
+{
+    <table>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Operand1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Operator)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Operand2)
+            </td>
+            <td> = </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Result)
+            </td>
+        </tr>
+    </table>
+}

@@ -16,6 +16,10 @@ $btnpadding: .6em;
     text-align: center;
     font-size: $fontsize;
     width: $width;
+    &:hover {
+    color: $darkgray;
+    background-color: $lightgray;
+    }
 }
 
 @mixin dropdown ($dropdownwidth, $fontsize){
@@ -59,11 +63,23 @@ p {
 select {
     @include dropdown(45%, 1.25em);
 }
+
+button:hover {
+    color: $darkgray;
+    background-color: $lightgray;
+}
+
 .container{
     margin: auto;
+    margin-top: 3em;
     width:60em;
     height: 40em;
 }
+
+/* ============================================
+                   PANEL 1  
+============================================= */
+
 .menu {
     float: left;
     background-color: $darkgray;
@@ -77,10 +93,6 @@ select {
     }
 }
 
-button:hover {
-    color: $lightgray;
-    background-color: $darkgray;
-}
 
 /* ======== CALCULATOR ======== */
 
@@ -121,7 +133,7 @@ button:hover {
 }
 
 #type {
-    @include dropdown(90%, 1.5em);
+    @include dropdown(100%, 1.5em);
 }
 
 #convert_equal {
@@ -129,15 +141,21 @@ button:hover {
     margin: 15% 15% 15% 15%;
 }
 
-/* ======== MEMORY ======== */
+/* ============================================
+                   PANEL 2
+============================================= */
 
 .memory {
     overflow: scroll;
     //width: 30em;
     height: 40em;
+    text-align: center;
 
     button {
-        @include stdbutton(1em, 80%);
+        @include stdbutton(1.5em, 80%);
+    }
+
+    td {
+        text-align: center;
     }
 }
-

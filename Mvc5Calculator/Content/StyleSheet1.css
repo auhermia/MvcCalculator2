@@ -26,11 +26,19 @@ select {
   width: 45%;
   font-size: 1.25em; }
 
+button:hover {
+  color: #3e3e3e;
+  background-color: #808080; }
+
 .container {
   margin: auto;
+  margin-top: 3em;
   width: 60em;
   height: 40em; }
 
+/* ============================================
+                   PANEL 1  
+============================================= */
 .menu {
   float: left;
   background-color: #3e3e3e;
@@ -47,14 +55,9 @@ select {
     text-align: center;
     font-size: 1.25em;
     width: 45%; }
-
-/*button:hover {
-  color: #808080;
-  background-color: #3e3e3e; }*/
-button:hover {
-    color: #3e3e3e;
-    background-color: #808080;
-}
+    .menu button:hover {
+      color: #3e3e3e;
+      background-color: #808080; }
 
 /* ======== CALCULATOR ======== */
 .maindisplay {
@@ -87,6 +90,9 @@ button:hover {
     height: 30%;
     margin-left: .3em;
     margin-right: .3em; }
+    .row button:hover {
+      color: #3e3e3e;
+      background-color: #808080; }
 
 /* ======== UNIT CONVERTER ======== */
 .converter {
@@ -97,17 +103,20 @@ button:hover {
 
 #type {
   background-color: #efefef;
-  width: 90%;
+  width: 100%;
   font-size: 1.5em; }
 
 #convert_equal {
   width: 70%;
   margin: 15% 15% 15% 15%; }
 
-/* ======== MEMORY ======== */
+/* ============================================
+                   PANEL 2
+============================================= */
 .memory {
   overflow: scroll;
-  height: 40em; }
+  height: 40em;
+  text-align: center; }
   .memory button {
     border: 0.125em solid #808080;
     border-radius: 1em;
@@ -115,11 +124,10 @@ button:hover {
     padding: 0.6em;
     color: #808080;
     text-align: center;
-    font-size: 1em;
-    width: 80%; }
-
-
-expression {
-    text-align: center;
     font-size: 1.5em;
-}
+    width: 80%; }
+    .memory button:hover {
+      color: #3e3e3e;
+      background-color: #808080; }
+  .memory td {
+    text-align: center; }

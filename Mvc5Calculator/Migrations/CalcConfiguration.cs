@@ -5,9 +5,9 @@ namespace Mvc5Calculator.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Mvc5Calculator.Models.CalculatorDBContext>
+    internal sealed class CalcConfiguration : DbMigrationsConfiguration<Mvc5Calculator.Models.CalculatorDBContext>
     {
-        public Configuration()
+        public CalcConfiguration()
         {
             AutomaticMigrationsEnabled = false;
         }

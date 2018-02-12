@@ -3,19 +3,19 @@ namespace Mvc5Calculator.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialCreate : DbMigration
+    public partial class InitConvert : DbMigration
     {
         public override void Up()
         {
             CreateTable(
-                "dbo.Calculators",
+                "dbo.Converters",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Operand1 = c.Single(nullable: false),
-                        Operand2 = c.Single(nullable: false),
-                        Operator = c.String(),
-                        Result = c.Single(nullable: false),
+                        FromUnit = c.String(),
+                        FromValue = c.Single(nullable: false),
+                        ToUnit = c.String(),
+                        ToValue = c.Single(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -23,7 +23,7 @@ namespace Mvc5Calculator.Migrations
         
         public override void Down()
         {
-            DropTable("dbo.Calculators");
+            DropTable("dbo.Converters");
         }
     }
 }

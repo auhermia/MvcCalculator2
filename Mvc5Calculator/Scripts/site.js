@@ -1,7 +1,5 @@
-﻿// updated 1/27/18 2300
-
-$(document).ready(function () {
-
+﻿$(document).ready(function () {
+    
     /* ================================================ *
     *                    DEFININITIONS     	            *
     * ================================================= */
@@ -27,16 +25,16 @@ $(document).ready(function () {
 
     // converion unit mapping
     var area = [
-        { 'Id': 'm2',   'Property': [1.0, 'Square meter (m^2)'] },
-        { 'Id': 'cm2',  'Property': [10000, 'Square centimeter (cm^2)'] },
-        { 'Id': 'km2',  'Property': [0.000001, 'Square kilometer (km^2)'] },
-        { 'Id': 'in2',  'Property': [1550, 'Square inch (in^2)'] },
-        { 'Id': 'ft2',  'Property': [10.7639, 'Square foot (ft^2)'] },
-        { 'Id': 'mi2',  'Property': [3.861e-7, 'Square mile (mi^2)'] },
+        { 'Id': 'm2', 'Property': [1.0, 'Square meter (m^2)'] },
+        { 'Id': 'cm2', 'Property': [10000, 'Square centimeter (cm^2)'] },
+        { 'Id': 'km2', 'Property': [0.000001, 'Square kilometer (km^2)'] },
+        { 'Id': 'in2', 'Property': [1550, 'Square inch (in^2)'] },
+        { 'Id': 'ft2', 'Property': [10.7639, 'Square foot (ft^2)'] },
+        { 'Id': 'mi2', 'Property': [3.861e-7, 'Square mile (mi^2)'] },
         { 'Id': 'acre', 'Property': [0.000247105, 'Acre (acre)'] }
     ];
     var length = [
-        { 'Id': 'm',  'Property': [1.0, 'Meter (m)'] },
+        { 'Id': 'm', 'Property': [1.0, 'Meter (m)'] },
         { 'Id': 'cm', 'Property': [100, 'Centimeter (cm)'] },
         { 'Id': 'km', 'Property': [.001, 'Kilometer (km)'] },
         { 'Id': 'in', 'Property': [39.36996, 'Inch (in)'] },
@@ -46,23 +44,23 @@ $(document).ready(function () {
     ];
     var mass = [
         { 'Id': 'kg', 'Property': [1.0, 'Kilogram (kg)'] },
-        { 'Id': 'g',  'Property': [1000, 'Gram (g)'] },
+        { 'Id': 'g', 'Property': [1000, 'Gram (g)'] },
         { 'Id': 'oz', 'Property': [35.274, 'Ounce (oz)'] },
         { 'Id': 'lb', 'Property': [2.20462, 'Pound (lb)'] },
-        { 'Id': 't',  'Property': [0.00110231, 'Ton (t)'] }
+        { 'Id': 't', 'Property': [0.00110231, 'Ton (t)'] }
     ];
     var time = [
-        { 'Id': 'd',   'Property': [1.0, 'Day (d)'] },
-        { 'Id': 'h',   'Property': [24, 'Hour (h)'] },
+        { 'Id': 'd', 'Property': [1.0, 'Day (d)'] },
+        { 'Id': 'h', 'Property': [24, 'Hour (h)'] },
         { 'Id': 'min', 'Property': [1440, 'Minute (min)'] },
         { 'Id': 'sec', 'Property': [86400, 'Second (sec)'] },
-        { 'Id': 'w',   'Property': [0.142857, 'Week (w)'] },
-        { 'Id': 'm',   'Property': [0.0328767, 'Month (m)'] },
-        { 'Id': 'yr',  'Property': [0.00273973, 'Year (yr)'] }
+        { 'Id': 'w', 'Property': [0.142857, 'Week (w)'] },
+        { 'Id': 'm', 'Property': [0.0328767, 'Month (m)'] },
+        { 'Id': 'yr', 'Property': [0.00273973, 'Year (yr)'] }
     ];
     var volume = [
-        { 'Id': 'l',   'Property': [1.0, 'Liter (L)'] },
-        { 'Id': 'mL',  'Property': [1000, 'Milliliter (mL)'] },
+        { 'Id': 'l', 'Property': [1.0, 'Liter (L)'] },
+        { 'Id': 'mL', 'Property': [1000, 'Milliliter (mL)'] },
         { 'Id': 'gal', 'Property': [0.264172, 'Gallon (gal)'] }
     ];
     // to do: need to fix calculation ?
@@ -75,18 +73,45 @@ $(document).ready(function () {
     *                 MAIN NAVIGATION   	            *
     * ================================================= */
 
+    // default - initial page load
     calculator.show();
     converter.hide();
+    calcPartial();
 
     calcbutton.click(function () {
         calculator.show();
         converter.hide();
+        calcPartial();
     });
+
     convertbutton.click(function () {
         calculator.hide();
         converter.show();
+        convertPartial();
         appendOption(length);
     });
+
+
+    // Partial View Load functions
+    function calcPartial() {
+        $.ajax({
+            url: "/Calculator/CalcPartial",
+            type: "GET",
+            success: function (result) {
+                $("#expression").html(result);
+            }
+        });
+    }
+
+    function convertPartial() {
+        $.ajax({
+            url: "/Converter/ConvertPartial",
+            type: "GET",
+            success: function (result) {
+                $("#expression").html(result);
+            }
+        });
+    }
 
     /* ================================================ *
     *                   CALCULATOR			            *
@@ -107,11 +132,12 @@ $(document).ready(function () {
     });
 
     // positive/negative values
-    $('#signop').click(function () {
-        value1 = value1 * -1;
-        bottomDisplay.text(value1);
-    });
+    //$('#plusminus').click({ plusminus(); });
 
+    //function plusminus() {
+    //    value1 = value1 * -1;
+    //    bottomDisplay.text(value1);
+    //}
     // square root
     $('#sqrt').click(function () {
         var self = $(this);
@@ -158,22 +184,8 @@ $(document).ready(function () {
 
         //valLength = (length1 > length2) ? length1 : length2;
 
-        //result = operate(value2, value1, operator);
-
-              
         Eval(value2, value1, operator);
-        result = bottomDisplay.text();
-        console.log(typeof operator);
-
-        // if Calculation = success -> add to db
-        $.ajax({
-            method: "POST",
-            url: "/Calculator/AddCalc",
-            data: { Operand1: value2, Operand2: value1, Operator: operator, Result: result },
-            success: function (response) {
-                alert("Test Result " + result);
-            }
-        });
+        //result = bottomDisplay.text();
 
         value1 = "";
         value2 = "";
@@ -184,16 +196,31 @@ $(document).ready(function () {
     function Eval(v2, v1, operator) {
         $.ajax({
             method: "POST",
-            async: false,
+            async: false, // keep or value1 & value = ""
             url: "/Calculator/Evaluate",
             data: { a: value2, b: value1, operation: operator },
-            success: function (result) {
+            success: function (resultMVC) {
                 topDisplay.text(value2 + " " + operator + " " + value1);
-                bottomDisplay.text(result);
-                $(".expression").text(value2 + " " + operator + " " + value1 + " = " + result);
+                bottomDisplay.text(resultMVC);
+                result = resultMVC;
+                // save to db
+                AddCalc();
+                $("table tr:last").after("(<tr><td>" + value2 + "</td>" + " " + "<td>" + operator +
+                    "</td>" + "<td>" + value1 + "</td>" + "<td> = </td>" + "<td>" + result + "</td></tr>");
             },
             error: function (error) {
                 alert(error);
+            }
+        });
+    }
+
+    function AddCalc() {
+        $.ajax({
+            method: "POST",
+            url: "/Calculator/AddCalc",
+            data: { Operand1: value2, Operand2: value1, Operator: operator, Result: result },
+            success: function (response) {
+                alert("Test Result " + result);
             }
         });
     }
@@ -206,7 +233,7 @@ $(document).ready(function () {
             method: "POST",
             url: "/Calculator/Delete",
             success: function () {
-                $(".expression").hide();
+                $("#expression").hide();
             }
         })
     });
@@ -289,8 +316,7 @@ $(document).ready(function () {
             return false;
         }
     });
-
-
+    
     // Conversions
     // ex: yd to in: yd to base, base to in
     //               yd to base = inverse of base to yd
@@ -387,8 +413,44 @@ $(document).ready(function () {
             else { toValue = fromValue; }
             toValue = toValue.toFixed(1);
         }
-        $('#to').val(toValue);
+        //$('#to').val(toValue);
+        alert(fromUnit + " " + fromValue + " " + fromCoeff + " " + toUnit + " " + toCoeff);
+        Convert(fromUnit, fromValue, fromCoeff, toUnit, toCoeff);
     });
 
-}); // end of script
+    // Ajax calls to server
+    function Convert(fromUnit, fromValue, fromCoeff, toUnit, toCoeff) {
+        $.ajax({
+            type: "POST",
+            url: "/Converter/Convert",
+            data: {
+                FromUnit: fromUnit, FromValue: fromValue, FromCoeff: fromCoeff,
+                ToUnit: toUnit, ToCoeff: toCoeff
+            },
+            success: function (result) {
+                alert("hellooo");
+                toValue = result;
+                AddConvert();
+                $('#to').val(toValue);
+                
+                // add in ajax call to save to db
+            }
+        })
+    }
+    
 
+    function AddConvert() {
+        $.ajax({
+            type: "POST",
+            url: "/Converter/AddConvert",
+            data: {
+                fromUnit: fromUnit, fromValue: fromValue,
+                toUnit: toUnit, toValue: toValue
+            },
+            success: function(response) {
+                alert("save successful");
+            }
+        })
+    }
+
+}); // end of script

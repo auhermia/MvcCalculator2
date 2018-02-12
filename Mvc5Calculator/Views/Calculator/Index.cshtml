@@ -1,9 +1,5 @@
-﻿
-@model IEnumerable<Mvc5Calculator.Models.Calculator>
-  
-  
-@{
-    ViewBag.Title = "Calculator";
+﻿  
+@{    ViewBag.Title = "Calculator";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -13,15 +9,17 @@
 <head>
     <meta charset="utf-8" />
     @*<link rel="stylesheet" href="Site.css" />*@
-    <link href="~/Content/StyleSheet1.css" rel="stylesheet" />   
+    <link href="~/Content/StyleSheet1.css" rel="stylesheet" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="~/Scripts/site.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Scripts/site.js"></script> 
+    
     <title>Calculator</title>
 </head>
 
 <body>
     <div class="container">
-        <!--PANEL 1-->
+        <!-- =============== PANEL 1 =============== -->
         <div class="menu">
             <!-- =============== CALCULATOR =============== -->
             <div id="calculator">
@@ -56,7 +54,7 @@
                 <div class="row">
                     <button class="num">0</button>
                     <button id="decimal" class="num">.</button>
-                    <button id="signop" class="operator">&#177</button>
+                    <button id="plusminus" class="operator">&#177</button>
                     <button id="equal" class="operator">=</button>
                 </div>
             </div>
@@ -79,32 +77,43 @@
                 <select id="toUnit"></select>
                 <button id="convert_equal">Convert</button>
             </div>
+
+            <!-- =============== NAVIGATION =============== -->
+
+            @*@Ajax.ActionLink("Calculator", "PartialTest", new AjaxOptions()
+                {
+                    HttpMethod = "GET",
+                    UpdateTargetId = "expression",
+                    InsertionMode = InsertionMode.Replace
+               })*@
             <button id="calcbutton">Calculator</button>
             <button id="convertbutton">Unit Conversion</button>
         </div>
-        <!--PANEL 2-->
-        <div class="memory">
-            <div class="expression">
-                @foreach (var item in Model)
+        <!-- =============== PANEL 2 =============== -->
+        <div id="memory" class="memory">
+            <div id="expression">
+                @*@foreach (var item in Model)
                 {
                     <table>
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Operand1)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Operator)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Operand2)
-                            </td>
-                            <td> = </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Result)
-                            </td>
-                        </tr>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Operand1)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Operator)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Operand2)
+                                </td>
+                                <td> = </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Result)
+                                </td>
+                            </tr>
+                        </tbody>                        
                     </table>
-                }
+                }*@
             </div>
             <button id="clearMem">Clear Memory</button>
         </div>

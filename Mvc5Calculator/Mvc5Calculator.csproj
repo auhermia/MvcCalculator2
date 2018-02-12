@@ -149,17 +149,19 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CalculatorController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ConverterController.cs" />
     <Compile Include="Controllers\TestCalculatorsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201802062139041_InitialCreate.cs" />
-    <Compile Include="Migrations\201802062139041_InitialCreate.Designer.cs">
-      <DependentUpon>201802062139041_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201802110959488_InitConvert.cs" />
+    <Compile Include="Migrations\201802110959488_InitConvert.Designer.cs">
+      <DependentUpon>201802110959488_InitConvert.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Migrations\CalcConfiguration.cs" />
+    <Compile Include="Migrations\ConvertConfiguration.cs" />
     <Compile Include="Models\Calculator.cs" />
+    <Compile Include="Models\Converter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -189,6 +191,8 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -218,6 +222,7 @@
     <Content Include="Views\TestCalculators\Edit.cshtml" />
     <Content Include="Views\TestCalculators\Index.cshtml" />
     <Content Include="Views\TestCalculators\IndexTest.cshtml" />
+    <Content Include="Views\Calculator\CalcPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -234,10 +239,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Converter\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201802062139041_InitialCreate.resx">
-      <DependentUpon>201802062139041_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201802110959488_InitConvert.resx">
+      <DependentUpon>201802110959488_InitConvert.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

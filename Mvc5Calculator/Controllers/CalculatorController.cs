@@ -17,7 +17,8 @@ namespace Mvc5Calculator.Controllers
         // GET: Calculator
         public ActionResult Index()
         {
-            return View(db.Calculator.ToList());
+            //return View(db.Calculator.ToList());
+            return View();
         }
 
         public JsonResult Evaluate(float a, float b, char operation)
@@ -42,17 +43,23 @@ namespace Mvc5Calculator.Controllers
                     result = Math.Pow(a, b);
                     break;
             }
-            // TempData["key"] = value;
-            //TempData["Operand1"] = a;
-            //System.Diagnostics.Debug.WriteLine("RESULT IS " + result + " a:" + a + " b:" + b);
             //System.Diagnostics.Debug.WriteLine(TempData["Operator"]);
             return Json(result);
         }
 
+        // Refresh calculations table
+        public PartialViewResult CalcPartial()
+        {
+            // why specify model?
+            List<Calculator> model = db.Calculator.ToList();
+            return PartialView("CalcPartial", model);
+            //return PartialView("PartialTest", db.Calculator.ToList());
+        }
+
+        // POST DATA TO DB
         [HttpPost]
         public ActionResult AddCalc(float Operand1, float Operand2, string Operator, float Result)
         {
-            System.Diagnostics.Debug.WriteLine(TempData["Operand1"]); // this works!!!
             try
             {
                 Calculator calcObj = new Calculator();
@@ -66,11 +73,12 @@ namespace Mvc5Calculator.Controllers
             }
             catch (Exception ex)
             {
-                return Content("Error occured");
+                return Content("Error occured " + ex);
             }
             return RedirectToAction("Index") ;
         }
 
+        // DELETE FROM DB
         [HttpPost]
         public ActionResult Delete()
         {

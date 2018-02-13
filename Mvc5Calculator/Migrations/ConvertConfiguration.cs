@@ -9,7 +9,8 @@ namespace Mvc5Calculator.Migrations
     {
         public ConvertConfiguration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true;
         }
 
         protected override void Seed(Mvc5Calculator.Models.ConverterDBContext context)

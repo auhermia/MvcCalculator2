@@ -421,16 +421,17 @@
     // Ajax calls to server
     function Convert(fromUnit, fromValue, fromCoeff, toUnit, toCoeff) {
         $.ajax({
-            type: "POST",
+            method: "POST",
             url: "/Converter/Convert",
             data: {
                 FromUnit: fromUnit, FromValue: fromValue, FromCoeff: fromCoeff,
                 ToUnit: toUnit, ToCoeff: toCoeff
             },
             success: function (result) {
-                alert("hellooo");
+                alert(typeof (fromValue));
                 toValue = result;
-                AddConvert();
+                AddConvert(fromUnit, fromValue, toUnit, toValue);
+                console.log(fromUnit + " " + fromValue);
                 $('#to').val(toValue);
                 
                 // add in ajax call to save to db
@@ -439,14 +440,14 @@
     }
     
 
-    function AddConvert() {
+    function AddConvert(fromUnit, fromValue, toUnit, toValue) {
         $.ajax({
-            type: "POST",
+            method: "POST",
             url: "/Converter/AddConvert",
-            data: {
-                fromUnit: fromUnit, fromValue: fromValue,
-                toUnit: toUnit, toValue: toValue
-            },
+            data: JSON.stringify( {
+                FromUnit: fromUnit, FromValue: fromValue,
+                ToUnit: toUnit, ToValue: toValue
+            }),
             success: function(response) {
                 alert("save successful");
             }

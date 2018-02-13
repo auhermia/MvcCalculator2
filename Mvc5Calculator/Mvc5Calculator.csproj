@@ -223,6 +223,7 @@
     <Content Include="Views\TestCalculators\Index.cshtml" />
     <Content Include="Views\TestCalculators\IndexTest.cshtml" />
     <Content Include="Views\Calculator\CalcPartial.cshtml" />
+    <Content Include="Views\Converter\ConvertPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -239,7 +240,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Converter\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201802110959488_InitConvert.resx">

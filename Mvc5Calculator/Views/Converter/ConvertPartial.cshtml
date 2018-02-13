@@ -1,0 +1,25 @@
+﻿
+@model IEnumerable<Mvc5Calculator.Models.Converter>
+
+<link href="~/Content/StyleSheet1.css" rel="stylesheet" />
+
+@foreach (var item in Model)
+{
+    <table>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FromValue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FromUnit)
+            </td>
+            <td> = </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ToValue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ToUnit)
+            </td>
+        </tr>
+    </table>
+}

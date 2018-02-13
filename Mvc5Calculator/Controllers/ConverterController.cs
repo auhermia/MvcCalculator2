@@ -43,6 +43,12 @@ namespace Mvc5Calculator.Controllers
             System.Diagnostics.Debug.WriteLine(toValue);
             return Json(toValue);
         }
+        
+        public PartialViewResult ConvertPartial()
+        {
+            List<Converter> model = db.Converter.ToList();
+            return PartialView("ConvertPartial", model);
+        }
 
         // Save to DB
         [HttpPost]

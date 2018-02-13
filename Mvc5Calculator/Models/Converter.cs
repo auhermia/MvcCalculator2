@@ -13,10 +13,10 @@ namespace Mvc5Calculator.Models
         public int Id { get; set; }
         public string FromUnit { get; set; }
         public float FromValue { get; set; }
-        public float FromCoeff { get; set; }
+        //public float FromCoeff { get; set; }
         public string ToUnit { get; set; }
         public float ToValue { get; set; }
-        public float ToCoeff { get; set; }
+        //public float ToCoeff { get; set; }
     }
 
     public class ConverterDBContext : DbContext

@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    
+
     /* ================================================ *
     *                    DEFININITIONS     	            *
     * ================================================= */
@@ -22,6 +22,7 @@
 
     // --------------- Unit Converter ---------------
     var type = $('#type');
+    //var fromValue = 0;
 
     // converion unit mapping
     var area = [
@@ -316,7 +317,7 @@
             return false;
         }
     });
-    
+
     // Conversions
     // ex: yd to in: yd to base, base to in
     //               yd to base = inverse of base to yd
@@ -325,10 +326,12 @@
         var fromUnit = document.getElementById("fromUnit").value;
         var toUnit = document.getElementById("toUnit").value;
 
+        //var fromValue = parseFloat(document.getElementById("from").value);
         var fromValue = parseFloat(document.getElementById("from").value);
         var toValue = 0;
 
         let typeVal = type.val();
+
 
         // length
         if (typeVal == "Length") {
@@ -343,7 +346,6 @@
             }).map(function (unit) {
                 return unit.Property[0];
             });
-            toValue = fromValue * (1 / fromCoeff) * toCoeff;
         }
         // area
         else if (typeVal == "Area") {
@@ -358,7 +360,6 @@
             }).map(function (unit) {
                 return unit.Property[0];
             });
-            toValue = fromValue * (1 / fromCoeff) * toCoeff;
         }
         // mass
         else if (typeVal == "Mass") {
@@ -373,7 +374,6 @@
             }).map(function (unit) {
                 return unit.Property[0];
             });
-            toValue = fromValue * (1 / fromCoeff) * toCoeff;
         }
         // time
         else if (typeVal == "Time") {
@@ -388,8 +388,6 @@
             }).map(function (unit) {
                 return unit.Property[0];
             });
-            // to do: need to fix rounding for units
-            toValue = (fromValue * (1 / fromCoeff) * toCoeff).toFixed(1);
         }
         // volume
         else if (typeVal == "Volume") {
@@ -404,51 +402,46 @@
             }).map(function (unit) {
                 return unit.Property[0];
             });
-            toValue = fromValue * (1 / fromCoeff) * toCoeff;
         }
         // temperature
         else {
-            if (toUnit == 'f' && fromUnit == 'c') { toValue = (fromValue * 9 / 5) + 32; }
-            else if (toUnit == 'c' && fromUnit == 'f') { toValue = (fromValue - 32) * 5 / 9; }
-            else { toValue = fromValue; }
-            toValue = toValue.toFixed(1);
+            var toCoeff = 1;
+            var fromCoeff = 1;
         }
-        //$('#to').val(toValue);
+
         alert(fromUnit + " " + fromValue + " " + fromCoeff + " " + toUnit + " " + toCoeff);
         Convert(fromUnit, fromValue, fromCoeff, toUnit, toCoeff);
+        //AddConvert(toValue, fromValue, toUnit, fromUnit);
     });
 
     // Ajax calls to server
     function Convert(fromUnit, fromValue, fromCoeff, toUnit, toCoeff) {
         $.ajax({
             method: "POST",
+            async: false,
             url: "/Converter/Convert",
             data: {
                 FromUnit: fromUnit, FromValue: fromValue, FromCoeff: fromCoeff,
                 ToUnit: toUnit, ToCoeff: toCoeff
             },
             success: function (result) {
-                alert(typeof (fromValue));
                 toValue = result;
-                AddConvert(fromUnit, fromValue, toUnit, toValue);
-                console.log(fromUnit + " " + fromValue);
                 $('#to').val(toValue);
-                
-                // add in ajax call to save to db
+                AddConvert(toValue, fromValue, toUnit, fromUnit);
+                $("table tr:last").after("(<tr><td>" + fromUnit + "</td>" + " " + "<td>" + fromValue +
+                    "</td>" + "<td> = </td>" + "<td>" + toUnit + "</td>" + "<td>" + toValue + "</td></tr>");
             }
         })
     }
-    
 
-    function AddConvert(fromUnit, fromValue, toUnit, toValue) {
+    function AddConvert(toValue, fromValue, toUnit, fromUnit) {
         $.ajax({
             method: "POST",
             url: "/Converter/AddConvert",
-            data: JSON.stringify( {
-                FromUnit: fromUnit, FromValue: fromValue,
-                ToUnit: toUnit, ToValue: toValue
-            }),
-            success: function(response) {
+            data: {
+                ToValue: toValue, FromUnit: fromUnit, FromValue: fromValue, ToUnit: toUnit
+            },
+            success: function (response) {
                 alert("save successful");
             }
         })

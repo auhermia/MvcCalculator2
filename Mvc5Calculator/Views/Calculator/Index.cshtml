@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8" />
     @*<link rel="stylesheet" href="Site.css" />*@
-    <link href="~/Content/StyleSheet1.css" rel="stylesheet" />
+    <link href="~/Content/StyleSheet1.css?version=1" rel="stylesheet" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
     <script src="~/Scripts/site.js"></script> 
@@ -89,31 +89,11 @@
             <button id="calcbutton">Calculator</button>
             <button id="convertbutton">Unit Conversion</button>
         </div>
+        <!-- =============== PANEL 1.5 =============== -->
+        <div class="space"></div>
         <!-- =============== PANEL 2 =============== -->
         <div id="memory" class="memory">
             <div id="expression">
-                @*@foreach (var item in Model)
-                {
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Operand1)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Operator)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Operand2)
-                                </td>
-                                <td> = </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Result)
-                                </td>
-                            </tr>
-                        </tbody>                        
-                    </table>
-                }*@
             </div>
             <button id="clearMem">Clear Memory</button>
         </div>

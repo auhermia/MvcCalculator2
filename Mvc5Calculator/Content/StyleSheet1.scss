@@ -72,7 +72,7 @@ button:hover {
 .container{
     margin: auto;
     margin-top: 3em;
-    width:60em;
+    width:65em;
     height: 40em;
 }
 
@@ -86,10 +86,11 @@ button:hover {
     width: 30em;
     height: 40em;
     border-radius: .3em;
-    padding: 1.5em;
+    padding-top: 1.5em;
+    padding-left: 2%;
 
     button {
-        @include stdbutton(1.25em, 45%);
+        @include stdbutton(1.25em, 48%);
     }
 }
 
@@ -140,7 +141,13 @@ button:hover {
     width: 70%;
     margin: 15% 15% 15% 15%;
 }
-
+/* ============================================
+                   PANEL 1.5
+============================================= */
+.space{
+    width: 5em;
+    background-color:red;
+}
 /* ============================================
                    PANEL 2
 ============================================= */
@@ -150,12 +157,31 @@ button:hover {
     //width: 30em;
     height: 40em;
     text-align: center;
+    padding: 10%;
+    position: relative;
+   
 
     button {
         @include stdbutton(1.5em, 80%);
+        position: absolute;
+        bottom: 0;
+        left: 10%;
     }
-
+    // centering tabe
+    table{
+        margin: 0 auto;
+    }
+    tr{
+        &:hover{
+            background-color: $darkgray;
+            color: $lightgray;
+        }
+    }
     td {
         text-align: center;
+        font-size: 1.5em;
+        vertical-align: middle;
+        padding: .75em;
+        border: 1px solid red;
     }
 }

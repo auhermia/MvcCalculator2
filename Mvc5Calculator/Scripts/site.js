@@ -22,7 +22,6 @@
 
     // --------------- Unit Converter ---------------
     var type = $('#type');
-    //var fromValue = 0;
 
     // converion unit mapping
     var area = [
@@ -66,8 +65,8 @@
     ];
     // to do: need to fix calculation ?
     var temperature = [
-        { 'Id': 'f', 'Property': [1.0, 'Farenheit (F)'] },
-        { 'Id': 'c', 'Property': [1.0, 'Celcius (C)'] }
+        { 'Id': 'F', 'Property': [1.0, 'Farenheit (F)'] },
+        { 'Id': 'C', 'Property': [1.0, 'Celcius (C)'] }
     ];
 
     /* ================================================ *
@@ -79,12 +78,14 @@
     converter.hide();
     calcPartial();
 
+    // display calculator portion
     calcbutton.click(function () {
         calculator.show();
         converter.hide();
         calcPartial();
     });
 
+    // display converter portion
     convertbutton.click(function () {
         calculator.hide();
         converter.show();
@@ -287,12 +288,14 @@
 
     // when user switches conversion type in dropdown
     type.on('change', function () {
+
         //reset unit dropdown to ''
         $('#fromUnit, #toUnit').html('');
         $('#from, #to').val('');
 
         let typeVal = type.val();
 
+        // display appropriate units when unit type is selected
         if (typeVal == "Mass") {
             appendOption(mass);
         } else if (typeVal == "Temperature") {
@@ -319,8 +322,8 @@
     });
 
     // Conversions
-    // ex: yd to in: yd to base, base to in
-    //               yd to base = inverse of base to yd
+    // ex: yd to in: yd to base unit, base unit to in
+    //               yd to base unit = inverse of base unit to yd
 
     $('#convert_equal').click(function () {
         var fromUnit = document.getElementById("fromUnit").value;
@@ -331,8 +334,7 @@
         var toValue = 0;
 
         let typeVal = type.val();
-
-
+        
         // length
         if (typeVal == "Length") {
             var fromCoeff = length.filter(function (unit) {
@@ -428,8 +430,8 @@
                 toValue = result;
                 $('#to').val(toValue);
                 AddConvert(toValue, fromValue, toUnit, fromUnit);
-                $("table tr:last").after("(<tr><td>" + fromUnit + "</td>" + " " + "<td>" + fromValue +
-                    "</td>" + "<td> = </td>" + "<td>" + toUnit + "</td>" + "<td>" + toValue + "</td></tr>");
+                $("table tr:last").after("(<tr><td>" + fromValue + "</td>" + " " + "<td>" + fromUnit +
+                    "</td>" + "<td> = </td>" + "<td>" + toValue + "</td>" + "<td>" + toUnit + "</td></tr>");
             }
         })
     }

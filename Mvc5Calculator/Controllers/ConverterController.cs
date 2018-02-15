@@ -78,5 +78,12 @@ namespace Mvc5Calculator.Controllers
         }
 
         // Delete from DB
+        [HttpPost]
+        public ActionResult Delete()
+        {
+            db.Converter.RemoveRange(db.Converter);
+            db.SaveChanges();
+            return RedirectToAction("Index", "Calculator");
+        }
     }
 }

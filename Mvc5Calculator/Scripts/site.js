@@ -22,6 +22,7 @@
 
     // --------------- Unit Converter ---------------
     var type = $('#type');
+    var isConverter = true; // to determine ClearMemory button action method
 
     // converion unit mapping
     var area = [
@@ -77,12 +78,14 @@
     calculator.show();
     converter.hide();
     calcPartial();
+    isConverter = false;
 
     // display calculator portion
     calcbutton.click(function () {
         calculator.show();
         converter.hide();
         calcPartial();
+        isConverter = false;
     });
 
     // display converter portion
@@ -91,6 +94,7 @@
         converter.show();
         convertPartial();
         appendOption(length);
+        isConverter = true;
     });
 
 
@@ -233,7 +237,7 @@
         // ajax call to db to delete all records 
         $.ajax({
             method: "POST",
-            url: "/Calculator/Delete",
+            url: (isConverter == true) ? "/Converter/Delete" : "/Calculator/Delete",
             success: function () {
                 $("#expression").hide();
             }

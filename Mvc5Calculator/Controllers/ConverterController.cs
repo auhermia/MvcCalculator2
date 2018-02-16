@@ -22,19 +22,20 @@ namespace Mvc5Calculator.Controllers
         public JsonResult Convert(string fromUnit, float fromValue, float fromCoeff,
                                   string toUnit, float toCoeff )
         {
-
             System.Diagnostics.Debug.WriteLine(fromUnit);
 
             float toValue = 0;
 
-            if (fromUnit == "f" && toUnit == "c")
+            // temperature conversion
+            if (fromUnit == "°F" && toUnit == "°C")
             {
                 toValue = (fromValue - 32) * 5 / 9;
             }
-            else if (fromUnit == "c" && toUnit == "f")
+            else if (fromUnit == "°C" && toUnit == "°F")
             {
                 toValue = (fromValue * 9 / 5) + 32;
             }
+            // everything else
             else 
             {
                 toValue = fromValue * (1 / fromCoeff) * toCoeff;

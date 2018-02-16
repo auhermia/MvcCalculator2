@@ -66,8 +66,8 @@
     ];
     // to do: need to fix calculation ?
     var temperature = [
-        { 'Id': 'F', 'Property': [1.0, 'Farenheit (F)'] },
-        { 'Id': 'C', 'Property': [1.0, 'Celcius (C)'] }
+        { 'Id': '\u00B0F', 'Property': [1.0, 'Farenheit (\u00B0F)'] },
+        { 'Id': '\u00B0C', 'Property': [1.0, 'Celcius (\u00B0C)'] }
     ];
 
     /* ================================================ *
@@ -211,8 +211,10 @@
                 result = resultMVC;
                 // save to db
                 AddCalc();
-                $("table tr:last").after("(<tr><td>" + value2 + "</td>" + " " + "<td>" + operator +
+                $("table tr:last").after("(<tr id='calcexp'><td>" + value2 + "</td>" + " " + "<td>" + operator +
                     "</td>" + "<td>" + value1 + "</td>" + "<td> = </td>" + "<td>" + result + "</td></tr>");
+                //$("table tr:last").after("(<tr id='calcexp'><td>" + value2 + "</td>" + " " + "<td>" + operator +
+                //    "</td>" + "<td>" + value1 + "</td>" + "<td> = </td>" + "<td>" + result + "</td></tr>");
             },
             error: function (error) {
                 alert(error);
@@ -239,7 +241,13 @@
             method: "POST",
             url: (isConverter == true) ? "/Converter/Delete" : "/Calculator/Delete",
             success: function () {
-                $("#expression").hide();
+                //$("#expression").hide();
+                    if (isConverter == true) {
+                        $("#convexp").hide();
+                    }
+                    else {
+                        $("#calcexp").hide();
+                    }
             }
         })
     });
@@ -417,7 +425,6 @@
 
         alert(fromUnit + " " + fromValue + " " + fromCoeff + " " + toUnit + " " + toCoeff);
         Convert(fromUnit, fromValue, fromCoeff, toUnit, toCoeff);
-        //AddConvert(toValue, fromValue, toUnit, fromUnit);
     });
 
     // Ajax calls to server
@@ -434,7 +441,9 @@
                 toValue = result;
                 $('#to').val(toValue);
                 AddConvert(toValue, fromValue, toUnit, fromUnit);
-                $("table tr:last").after("(<tr><td>" + fromValue + "</td>" + " " + "<td>" + fromUnit +
+                //$("table tr:last").after("(<tr><td>" + fromValue + "</td>" + " " + "<td>" + fromUnit +
+                //    "</td>" + "<td> = </td>" + "<td>" + toValue + "</td>" + "<td>" + toUnit + "</td></tr>");
+                $("table tr:last").after("(<tr id='convexp'><td>" + fromValue + "</td>" + " " + "<td>" + fromUnit +
                     "</td>" + "<td> = </td>" + "<td>" + toValue + "</td>" + "<td>" + toUnit + "</td></tr>");
             }
         })

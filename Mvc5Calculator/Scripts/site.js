@@ -138,12 +138,11 @@
     });
 
     // positive/negative values
-    //$('#plusminus').click({ plusminus(); });
+    $('#plusminus').click(function () {
+        value1 = value1 * -1;
+        bottomDisplay.text(value1);
+    });
 
-    //function plusminus() {
-    //    value1 = value1 * -1;
-    //    bottomDisplay.text(value1);
-    //}
     // square root
     $('#sqrt').click(function () {
         var self = $(this);
@@ -191,8 +190,8 @@
         //valLength = (length1 > length2) ? length1 : length2;
 
         Eval(value2, value1, operator);
-        //result = bottomDisplay.text();
 
+        // reset values
         value1 = "";
         value2 = "";
         operator = "";
@@ -209,12 +208,7 @@
                 topDisplay.text(value2 + " " + operator + " " + value1);
                 bottomDisplay.text(resultMVC);
                 result = resultMVC;
-                // save to db
                 AddCalc();
-                $("table tr:last").after("(<tr id='calcexp'><td>" + value2 + "</td>" + " " + "<td>" + operator +
-                    "</td>" + "<td>" + value1 + "</td>" + "<td> = </td>" + "<td>" + result + "</td></tr>");
-                //$("table tr:last").after("(<tr id='calcexp'><td>" + value2 + "</td>" + " " + "<td>" + operator +
-                //    "</td>" + "<td>" + value1 + "</td>" + "<td> = </td>" + "<td>" + result + "</td></tr>");
             },
             error: function (error) {
                 alert(error);
@@ -228,26 +222,23 @@
             url: "/Calculator/AddCalc",
             data: { Operand1: value2, Operand2: value1, Operator: operator, Result: result },
             success: function (response) {
-                alert("Test Result " + result);
+                calcPartial();
             }
         });
     }
 
     // Clear Memory
     $("#clearMem").click(function () {
-        // clear Memory display
-        // ajax call to db to delete all records 
         $.ajax({
             method: "POST",
             url: (isConverter == true) ? "/Converter/Delete" : "/Calculator/Delete",
             success: function () {
-                //$("#expression").hide();
-                    if (isConverter == true) {
-                        $("#convexp").hide();
-                    }
-                    else {
-                        $("#calcexp").hide();
-                    }
+                if (isConverter == true) {
+                    $("#convexp").hide();
+                }
+                else {
+                    $("#calcexp").hide();
+                }
             }
         })
     });
@@ -340,8 +331,7 @@
     $('#convert_equal').click(function () {
         var fromUnit = document.getElementById("fromUnit").value;
         var toUnit = document.getElementById("toUnit").value;
-
-        //var fromValue = parseFloat(document.getElementById("from").value);
+        
         var fromValue = parseFloat(document.getElementById("from").value);
         var toValue = 0;
 
@@ -441,10 +431,6 @@
                 toValue = result;
                 $('#to').val(toValue);
                 AddConvert(toValue, fromValue, toUnit, fromUnit);
-                //$("table tr:last").after("(<tr><td>" + fromValue + "</td>" + " " + "<td>" + fromUnit +
-                //    "</td>" + "<td> = </td>" + "<td>" + toValue + "</td>" + "<td>" + toUnit + "</td></tr>");
-                $("table tr:last").after("(<tr id='convexp'><td>" + fromValue + "</td>" + " " + "<td>" + fromUnit +
-                    "</td>" + "<td> = </td>" + "<td>" + toValue + "</td>" + "<td>" + toUnit + "</td></tr>");
             }
         })
     }
@@ -456,8 +442,8 @@
             data: {
                 ToValue: toValue, FromUnit: fromUnit, FromValue: fromValue, ToUnit: toUnit
             },
-            success: function (response) {
-                alert("save successful");
+            success: function () {
+                convertPartial();
             }
         })
     }

@@ -104,6 +104,7 @@
             url: "/Calculator/CalcPartial",
             type: "GET",
             success: function (result) {
+                alert("calcpartial");
                 $("#expression").html(result);
             }
         });
@@ -138,10 +139,12 @@
     });
 
     // positive/negative values
-    $('#plusminus').click(function () {
+    $('#plusminus').click( PlusMinus );
+
+    function PlusMinus() {
         value1 = value1 * -1;
         bottomDisplay.text(value1);
-    });
+}
 
     // square root
     $('#sqrt').click(function () {
@@ -157,7 +160,7 @@
     });
 
     // + - * / ^
-    $(".operator").not('#equal,#signop,#sqrt').click(function () {
+    $(".operator").click(function () {
         var self = $(this);
         operator = self.text();
         if (calcFirst == false) {
@@ -169,25 +172,21 @@
         value1 = "";
     });
 
+    function Operator() {
+        let self = $(".operator");
+        operator = self.text();
+        topDisplay.text(value1 + " " + operator);
+        bottomDisplay.text("");
+        value2 = value1;
+        value1 = "";
+        if (calcFirst == false) {
+            value1 = result;
+        }
+    }
+
     $("#equal").click(function () {
 
         // to do: error handling
-
-        //function findLength(val) {
-        //    var valLength = "";
-        //    if (val != Math.floor(val)) {
-        //        valLength = val.toString().split('.')[1].length;
-        //        return valLength;
-        //        console.log(typeof valLength);
-        //    }
-        //    else
-        //        valLength = "0";
-        //    return parseFloat(valLength);
-        //}
-        //var length1 = findLength(value1);
-        //var length2 = findLength(value2);
-
-        //valLength = (length1 > length2) ? length1 : length2;
 
         Eval(value2, value1, operator);
 
@@ -197,6 +196,7 @@
         operator = "";
         calcFirst = false;
     });
+    
 
     function Eval(v2, v1, operator) {
         $.ajax({
@@ -219,9 +219,11 @@
     function AddCalc() {
         $.ajax({
             method: "POST",
+            async: false,
             url: "/Calculator/AddCalc",
             data: { Operand1: value2, Operand2: value1, Operator: operator, Result: result },
             success: function (response) {
+                alert("test");
                 calcPartial();
             }
         });
@@ -412,16 +414,14 @@
             var toCoeff = 1;
             var fromCoeff = 1;
         }
-
-        alert(fromUnit + " " + fromValue + " " + fromCoeff + " " + toUnit + " " + toCoeff);
+        
         Convert(fromUnit, fromValue, fromCoeff, toUnit, toCoeff);
     });
 
-    // Ajax calls to server
+    // Perform conversion
     function Convert(fromUnit, fromValue, fromCoeff, toUnit, toCoeff) {
         $.ajax({
             method: "POST",
-            async: false,
             url: "/Converter/Convert",
             data: {
                 FromUnit: fromUnit, FromValue: fromValue, FromCoeff: fromCoeff,
@@ -434,10 +434,11 @@
             }
         })
     }
-
+    // Save conversion to db
     function AddConvert(toValue, fromValue, toUnit, fromUnit) {
         $.ajax({
             method: "POST",
+            async: false,
             url: "/Converter/AddConvert",
             data: {
                 ToValue: toValue, FromUnit: fromUnit, FromValue: fromValue, ToUnit: toUnit

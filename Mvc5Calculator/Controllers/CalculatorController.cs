@@ -75,7 +75,7 @@ namespace Mvc5Calculator.Controllers
             {
                 return Content("Error occured " + ex);
             }
-            return RedirectToAction("Index") ;
+            return RedirectToAction("CalcPartial") ;
         }
 
         // DELETE FROM DB

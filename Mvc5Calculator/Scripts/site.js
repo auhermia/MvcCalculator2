@@ -11,11 +11,11 @@
     var convertbutton = $('#convertbutton');
 
     // --------------- Calculator ---------------
-    var value1 = "";
-    var value2 = "";
-    var operator = "";
-    var result = 0;
-    var calcFirst = true;
+    //var value1 = "";
+    //var value2 = "";
+    //var operator = "";
+    //var result = 0;
+    //var calcFirst = true;
 
     var topDisplay = $("#topdisplay");
     var bottomDisplay = $("#bottomdisplay");
@@ -80,7 +80,7 @@
     calcPartial();
     isConverter = false;
 
-    // display calculator portion
+    // display calculator portion, hide converter
     calcbutton.click(function () {
         calculator.show();
         converter.hide();
@@ -88,7 +88,7 @@
         isConverter = false;
     });
 
-    // display converter portion
+    // display converter portion, hide calculatro
     convertbutton.click(function () {
         calculator.hide();
         converter.show();
@@ -127,26 +127,36 @@
     topDisplay.text('');
     bottomDisplay.text('0');
 
-    // retrieves text of num key entered and show on display
-    $('.num').click(function () {
-        var self = $(this);
-        value1 += self.text();
-        bottomDisplay.text(value1);
-        if (operator == '') {
-            calcFirst = true;
-            topDisplay.text('');
-        }
+    var calculatorObj = Calculator();
+    calculatorObj.change( function (){
+        bottomDisplay.text(calculatorObj.currentState());
+        topDisplay.text(calculatorObj.previousState());
     });
 
-    // positive/negative values
-    $('#plusminus').click( PlusMinus );
+    $('.num').click(function (e) {
+        calculatorObj.num($(e.target).text());
+    });
+    
+    $('#plusminus').click(function () {
+        calculatorObj.plusMinus();
+    });
+    
+    $(".operator").click(function (e) {
+        calculatorObj.Operator($(e.target).text());
+    });
 
-    function PlusMinus() {
-        value1 = value1 * -1;
-        bottomDisplay.text(value1);
-}
+    $("#equal").click(function () {
+        Eval(calculatorObj.getVal2(), calculatorObj.getVal1(), calculatorObj.getOperator());
+        calculatorObj.Reset();
+    });
 
-    // square root
+    // Clear everything on display
+    $('#clear').click(function () {
+        calculatorObj.Clear();
+    });
+
+    
+        // square root
     $('#sqrt').click(function () {
         var self = $(this);
         if (calcFirst == false) {
@@ -158,54 +168,16 @@
         bottomDisplay.text(result);
         value1 = "";
     });
-
-    // + - * / ^
-    $(".operator").click(function () {
-        var self = $(this);
-        operator = self.text();
-        if (calcFirst == false) {
-            value1 = result;
-        }
-        topDisplay.text(value1 + " " + operator);
-        bottomDisplay.text("");
-        value2 = value1;
-        value1 = "";
-    });
-
-    function Operator() {
-        let self = $(".operator");
-        operator = self.text();
-        topDisplay.text(value1 + " " + operator);
-        bottomDisplay.text("");
-        value2 = value1;
-        value1 = "";
-        if (calcFirst == false) {
-            value1 = result;
-        }
-    }
-
-    $("#equal").click(function () {
-
-        // to do: error handling
-
-        Eval(value2, value1, operator);
-
-        // reset values
-        value1 = "";
-        value2 = "";
-        operator = "";
-        calcFirst = false;
-    });
     
-
+    // Ajax call to evaluate data
     function Eval(v2, v1, operator) {
         $.ajax({
             method: "POST",
             async: false, // keep or value1 & value = ""
             url: "/Calculator/Evaluate",
-            data: { a: value2, b: value1, operation: operator },
+            data: { a: v2, b: v1, operation: operator },
             success: function (resultMVC) {
-                topDisplay.text(value2 + " " + operator + " " + value1);
+                topDisplay.text(v2 + " " + operator + " " + v1);
                 bottomDisplay.text(resultMVC);
                 result = resultMVC;
                 AddCalc();
@@ -216,6 +188,7 @@
         });
     }
 
+    // Ajax call to save data to db
     function AddCalc() {
         $.ajax({
             method: "POST",
@@ -245,31 +218,28 @@
         })
     });
 
-    // Clear everything on display
-    $('#clear').click(function () {
-        value1 = "";
-        value2 = "";
-        bottomDisplay.text('0');
-        topDisplay.empty();
-        calcFirst = true;
-    });
+        //siri.on(function (text) {
+        //    if (text == '2') {
+        //        calculatorObj.num(2)
+        //    }
+        //})
 
     // enable user to use keyboard for calculations
     // note: currently unable to use +/-, esc, and carriage return on some keyboards
     $(document).keypress(function (e) {
-        var key = event.which;
+        var key = e.which;
         if (key === 48) { $("#0").click(); }
-        else if (key === 49) { $("#1").click(); }
-        else if (key === 50) { $("#2").click(); }
-        else if (key === 51) { $("#3").click(); }
-        else if (key === 52) { $("#4").click(); }
-        else if (key === 53) { $("#5").click(); }
-        else if (key === 54) { $("#6").click(); }
-        else if (key === 55) { $("#7").click(); }
-        else if (key === 56) { $("#8").click(); }
-        else if (key === 57) { $("#9").click(); }
+        else if (key === 49) { calculatorObj.num(1); }
+        else if (key === 50) { calculatorObj.num(2); }
+        else if (key === 51) { calculatorObj.num(3); }
+        else if (key === 52) { calculatorObj.num(4); }
+        else if (key === 53) { calculatorObj.num(5); }
+        else if (key === 54) { calculatorObj.num(6); }
+        else if (key === 55) { calculatorObj.num(7); }
+        else if (key === 56) { calculatorObj.num(8); }
+        else if (key === 57) { calculatorObj.num(9); }
         else if (key === 42) { $("#multiply").click(); }
-        else if (key === 43) { $("#plus").click(); }
+        else if (key === 43) { calculatorObj.Operator(+);}
         else if (key === 45) { $("#minus").click(); }
         else if (key === 46) { $("#decimal").click(); }
         else if (key === 47) { $("#divide").click(); }

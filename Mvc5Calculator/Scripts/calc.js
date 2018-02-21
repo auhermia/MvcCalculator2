@@ -7,7 +7,7 @@
     var self = this;
     var _previousState;
     var _currentState;
-    var result = "";
+    var _result = "";
 
     function change(handler) {
         changeHandler = handler;
@@ -26,6 +26,9 @@
     }
     function getOperator() {
         return _operator;
+    }
+    function getResult() {
+        return _result;
     }
 
     function num(val) {
@@ -58,7 +61,7 @@
         // reset values
         _value1 = "";
         _value2 = "";
-        operator = "";
+        _operator = "";
         calcFirst = false;
     }
     function Clear() {
@@ -79,11 +82,12 @@
             data: { a: v2, b: v1, operation: operator },
             success: function (resultMVC) {
                 //topDisplay.text(v2 + " " + operator + " " + v1);
+                console.log("hEy tHiS wOrKs");
                 _previousState = _value2 + " " + _operator + " " + _value1;
                // bottomDisplay.text(resultMVC);
                 _currentState = resultMVC;
-                result = resultMVC;
-               // AddCalc(calculatorObj.getVal2(), calculatorObj.getVal1(), calculatorObj.getOperator(), result);
+                _result = resultMVC;
+                changeHandler();
             },
             error: function (error) {
                 alert(error);
@@ -91,18 +95,35 @@
         });
     }
 
+    function AddCalc(v2, v1, operator, result) {
+        $.ajax({
+            method: "POST",
+            async: false,
+            url: "/Calculator/AddCalc",
+            data: { Operand1: v2, Operand2: v1, Operator: operator, Result: result },
+            success: function (response) {
+                alert("successful db save");
+                calcPartial();
+            }
+        });
+    }
+
+
+
     //exposing functions
     self.getVal1 = getVal1;
     self.getVal2 = getVal2;
+    self.getResult = getResult;
     self.change = change;
     self.currentState = currentState;
     self.previousState = previousState;
     self.num = num;
     self.plusMinus = plusMinus;
     self.Operator = Operator;
-    self.getOperator = getOperator
+    self.getOperator = getOperator;
     self.Reset = Reset;
     self.Clear = Clear;
     self.Eval = Eval;
+    self.AddCalc = AddCalc;
     return self;
 }

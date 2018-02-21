@@ -165,6 +165,9 @@
     $("#equal").click(function () {
         //Eval(calculatorObj.getVal2(), calculatorObj.getVal1(), calculatorObj.getOperator());
         calculatorObj.Eval(calculatorObj.getVal2(), calculatorObj.getVal1(), calculatorObj.getOperator());
+        calculatorObj.AddCalc(calculatorObj.getVal2(), calculatorObj.getVal1(), calculatorObj.getOperator(), calculatorObj.result);
+        console.log("hey this gets called");
+
         calculatorObj.Reset();
     });
 
@@ -207,19 +210,19 @@
     //    });
     //}
 
-    // Ajax call to save data to db
-    function AddCalc(v2, v1, operator, result) {
-        $.ajax({
-            method: "POST",
-            async: false,
-            url: "/Calculator/AddCalc",
-            data: { Operand1: v2, Operand2: v1, Operator: operator, Result: result },
-            success: function (response) {
-                alert("test");
-                calcPartial();
-            }
-        });
-    }
+    //// Ajax call to save data to db
+    //function AddCalc(v2, v1, operator, result) {
+    //    $.ajax({
+    //        method: "POST",
+    //        async: false,
+    //        url: "/Calculator/AddCalc",
+    //        data: { Operand1: v2, Operand2: v1, Operator: operator, Result: result },
+    //        success: function (response) {
+    //            alert("successful db save");
+    //            calcPartial();
+    //        }
+    //    });
+    //}
 
 
 

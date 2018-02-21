@@ -98,7 +98,7 @@
     });
 
 
-    // Partial View Load functions
+    // Partial View Load function - calculator
     function calcPartial() {
         $.ajax({
             url: "/Calculator/CalcPartial",
@@ -109,95 +109,13 @@
             }
         });
     }
-
+    // Partial View Load function - converter
     function convertPartial() {
         $.ajax({
             url: "/Converter/ConvertPartial",
             type: "GET",
             success: function (result) {
                 $("#expression").html(result);
-            }
-        });
-    }
-
-    /* ================================================ *
-    *                   CALCULATOR			            *
-    * ================================================= */
-
-    topDisplay.text('');
-    bottomDisplay.text('0');
-
-    var calculatorObj = Calculator();
-    calculatorObj.change( function (){
-        bottomDisplay.text(calculatorObj.currentState());
-        topDisplay.text(calculatorObj.previousState());
-    });
-
-    $('.num').click(function (e) {
-        calculatorObj.num($(e.target).text());
-    });
-    
-    $('#plusminus').click(function () {
-        calculatorObj.plusMinus();
-    });
-    
-    $(".operator").click(function (e) {
-        calculatorObj.Operator($(e.target).text());
-    });
-
-    $("#equal").click(function () {
-        Eval(calculatorObj.getVal2(), calculatorObj.getVal1(), calculatorObj.getOperator());
-        calculatorObj.Reset();
-    });
-
-    // Clear everything on display
-    $('#clear').click(function () {
-        calculatorObj.Clear();
-    });
-
-    
-        // square root
-    $('#sqrt').click(function () {
-        var self = $(this);
-        if (calcFirst == false) {
-            value1 = result;
-        }
-        value1n = parseFloat(value1);
-        result = Math.sqrt(value1n);
-        topDisplay.text(self.text() + value1);
-        bottomDisplay.text(result);
-        value1 = "";
-    });
-    
-    // Ajax call to evaluate data
-    function Eval(v2, v1, operator) {
-        $.ajax({
-            method: "POST",
-            async: false, // keep or value1 & value = ""
-            url: "/Calculator/Evaluate",
-            data: { a: v2, b: v1, operation: operator },
-            success: function (resultMVC) {
-                topDisplay.text(v2 + " " + operator + " " + v1);
-                bottomDisplay.text(resultMVC);
-                result = resultMVC;
-                AddCalc();
-            },
-            error: function (error) {
-                alert(error);
-            }
-        });
-    }
-
-    // Ajax call to save data to db
-    function AddCalc() {
-        $.ajax({
-            method: "POST",
-            async: false,
-            url: "/Calculator/AddCalc",
-            data: { Operand1: value2, Operand2: value1, Operator: operator, Result: result },
-            success: function (response) {
-                alert("test");
-                calcPartial();
             }
         });
     }
@@ -218,6 +136,93 @@
         })
     });
 
+    /* ================================================ *
+    *                   CALCULATOR			            *
+    * ================================================= */
+
+    topDisplay.text('');
+    bottomDisplay.text('0');
+
+    var calculatorObj = Calculator();
+
+    calculatorObj.change( function (){
+        bottomDisplay.text(calculatorObj.currentState());
+        topDisplay.text(calculatorObj.previousState());
+    });
+
+    $('.num').click(function (e) {
+        calculatorObj.num($(e.target).text());
+    });
+    
+    $('#plusminus').click(function () {
+        calculatorObj.plusMinus();
+    });
+    
+    $(".operator").click(function (e) {
+        calculatorObj.Operator($(e.target).text());
+    });
+
+    $("#equal").click(function () {
+        //Eval(calculatorObj.getVal2(), calculatorObj.getVal1(), calculatorObj.getOperator());
+        calculatorObj.Eval(calculatorObj.getVal2(), calculatorObj.getVal1(), calculatorObj.getOperator());
+        calculatorObj.Reset();
+    });
+
+    // Clear everything on display
+    $('#clear').click(function () {
+        calculatorObj.Clear();
+    });
+
+
+    
+        // square root
+    $('#sqrt').click(function () {
+        var self = $(this);
+        if (calcFirst == false) {
+            value1 = result;
+        }
+        value1n = parseFloat(value1);
+        result = Math.sqrt(value1n);
+        topDisplay.text(self.text() + value1);
+        bottomDisplay.text(result);
+        value1 = "";
+    });
+    
+    // Ajax call to evaluate data
+    //function Eval(v2, v1, operator) {
+    //    $.ajax({
+    //        method: "POST",
+    //        async: false, // keep or value1 & value = ""
+    //        url: "/Calculator/Evaluate",
+    //        data: { a: v2, b: v1, operation: operator },
+    //        success: function (resultMVC) {
+    //            topDisplay.text(v2 + " " + operator + " " + v1);
+    //            bottomDisplay.text(resultMVC);
+    //            result = resultMVC;
+    //            AddCalc(calculatorObj.getVal2(), calculatorObj.getVal1(), calculatorObj.getOperator(), result);
+    //        },
+    //        error: function (error) {
+    //            alert(error);
+    //        }
+    //    });
+    //}
+
+    // Ajax call to save data to db
+    function AddCalc(v2, v1, operator, result) {
+        $.ajax({
+            method: "POST",
+            async: false,
+            url: "/Calculator/AddCalc",
+            data: { Operand1: v2, Operand2: v1, Operator: operator, Result: result },
+            success: function (response) {
+                alert("test");
+                calcPartial();
+            }
+        });
+    }
+
+
+
         //siri.on(function (text) {
         //    if (text == '2') {
         //        calculatorObj.num(2)
@@ -228,7 +233,7 @@
     // note: currently unable to use +/-, esc, and carriage return on some keyboards
     $(document).keypress(function (e) {
         var key = e.which;
-        if (key === 48) { $("#0").click(); }
+        if (key === 48) { calculatorObj.num(0);; }
         else if (key === 49) { calculatorObj.num(1); }
         else if (key === 50) { calculatorObj.num(2); }
         else if (key === 51) { calculatorObj.num(3); }
@@ -238,13 +243,13 @@
         else if (key === 55) { calculatorObj.num(7); }
         else if (key === 56) { calculatorObj.num(8); }
         else if (key === 57) { calculatorObj.num(9); }
-        else if (key === 42) { $("#multiply").click(); }
-        else if (key === 43) { calculatorObj.Operator(+);}
-        else if (key === 45) { $("#minus").click(); }
-        else if (key === 46) { $("#decimal").click(); }
-        else if (key === 47) { $("#divide").click(); }
-        else if (key === 94) { $("#expo").click(); }
-        else if (key === 27) { $("#clear").click(); } // fix
+        else if (key === 42) { calculatorObj.Operator('×'); }
+        else if (key === 43) { calculatorObj.Operator('+'); }
+        else if (key === 45) { calculatorObj.Operator('-'); }
+        else if (key === 46) { calculatorObj.Operator('.'); }
+        else if (key === 47) { calculatorObj.Operator('÷'); }
+        else if (key === 94) { calculatorObj.Operator('^'); }
+        else if (key === 27) { calculatorObj.Clear(); } // fix
         else if (key === 61 || key === 13) { $("#equal").click(); } // return fix
         else { return false; }
     });

@@ -1,12 +1,13 @@
 ﻿function Calculator() {
-    var value1 = "";
-    var value2 = "";
+    var _value1 = "";
+    var _value2 = "";
     var changeHandler;
-    var operator = "";
+    var _operator = "";
     var calcFirst = true;
-    var self = this
+    var self = this;
     var _previousState;
     var _currentState;
+    var result = "";
 
     function change(handler) {
         changeHandler = handler;
@@ -18,36 +19,35 @@
         return _previousState;
     }
     function getVal1() {
-        return value1;
+        return _value1;
     }
     function getVal2() {
-        return value2;
+        return _value2;
     }
-
     function getOperator() {
-        return operator;
+        return _operator;
     }
 
     function num(val) {
-        value1 += val;
-        _currentState = value1;
-        if (operator == '') {
-            _previousState = "";
-            calcFirst = true;
-        }
+        _value1 += val;
+        _currentState = _value1;
+        //if (operator == '') {
+        //    _previousState = "";
+        //    calcFirst = true;
+        //}
         changeHandler();
     }
     function plusMinus() {
-        value1 = value1 * -1;
-        _currentState = value1;
+        _value1 = _value1 * -1;
+        _currentState = _value1;
         changeHandler();
     }
     function Operator(op) {
-        operator = op;
-        _previousState = value1 + " " + operator;
+        _operator = op;
+        _previousState = _value1 + " " + _operator;
         _currentState = "";
-        value2 = value1;
-        value1 = "";
+        _value2 = _value1;
+        _value1 = "";
         //if (calcFirst == false) {
         //    value1 = result;
         //}
@@ -56,23 +56,44 @@
     function Reset() {
 
         // reset values
-        value1 = "";
-        value2 = "";
+        _value1 = "";
+        _value2 = "";
         operator = "";
         calcFirst = false;
     }
     function Clear() {
-        value1 = "";
-        value2 = "";
+        _value1 = "";
+        _value2 = "";
         _previousState = "";
         _currentState = 0;
         calcFirst = true;
         changeHandler();
     }
 
+    // ajax call test
+    function Eval(v2, v1, operator) {
+        $.ajax({
+            method: "POST",
+            async: false, // keep or value1 & value = ""
+            url: "/Calculator/Evaluate",
+            data: { a: v2, b: v1, operation: operator },
+            success: function (resultMVC) {
+                //topDisplay.text(v2 + " " + operator + " " + v1);
+                _previousState = _value2 + " " + _operator + " " + _value1;
+               // bottomDisplay.text(resultMVC);
+                _currentState = resultMVC;
+                result = resultMVC;
+               // AddCalc(calculatorObj.getVal2(), calculatorObj.getVal1(), calculatorObj.getOperator(), result);
+            },
+            error: function (error) {
+                alert(error);
+            }
+        });
+    }
+
     //exposing functions
-    self.val1 = val1;
-    self.val2 = val2;
+    self.getVal1 = getVal1;
+    self.getVal2 = getVal2;
     self.change = change;
     self.currentState = currentState;
     self.previousState = previousState;
@@ -82,6 +103,6 @@
     self.getOperator = getOperator
     self.Reset = Reset;
     self.Clear = Clear;
-
+    self.Eval = Eval;
     return self;
 }

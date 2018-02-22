@@ -45,7 +45,13 @@
         _currentState = _value1;
         changeHandler();
     }
-    function Operator(op) {
+
+    function backspace() {
+        _value1 = _value1.slice(0, -1);
+        _currentState = _value1;
+        changeHandler();
+    }
+    function operator(op) {
         _operator = op;
         _previousState = _value1 + " " + _operator;
         _currentState = "";
@@ -81,12 +87,11 @@
             url: "/Calculator/Evaluate",
             data: { a: v2, b: v1, operation: operator },
             success: function (resultMVC) {
-                //topDisplay.text(v2 + " " + operator + " " + v1);
                 console.log("hEy tHiS wOrKs");
                 _previousState = _value2 + " " + _operator + " " + _value1;
-               // bottomDisplay.text(resultMVC);
                 _currentState = resultMVC;
                 _result = resultMVC;
+                AddCalc(_value2, _value1, _operator, _result);
                 changeHandler();
             },
             error: function (error) {
@@ -103,13 +108,12 @@
             data: { Operand1: v2, Operand2: v1, Operator: operator, Result: result },
             success: function (response) {
                 alert("successful db save");
-                calcPartial();
+                // cant call calcPartial from here
+                //calcPartial.call();
             }
         });
     }
-
-
-
+    
     //exposing functions
     self.getVal1 = getVal1;
     self.getVal2 = getVal2;
@@ -118,8 +122,9 @@
     self.currentState = currentState;
     self.previousState = previousState;
     self.num = num;
+    self.backspace = backspace;
     self.plusMinus = plusMinus;
-    self.Operator = Operator;
+    self.operator = operator;
     self.getOperator = getOperator;
     self.Reset = Reset;
     self.Clear = Clear;

@@ -2,9 +2,9 @@
 
 <link href="~/Content/StyleSheet1.css" rel="stylesheet" />
 
-@foreach (var item in Model)
-{
-    <table>
+<table>
+    @foreach (var item in Model)
+    {
         <tr id="calcexp">
             <td>
                 @Html.DisplayFor(modelItem => item.Operand1)
@@ -20,5 +20,6 @@
                 @Html.DisplayFor(modelItem => item.Result)
             </td>
         </tr>
-    </table>
-}
+    }
+</table>
+    

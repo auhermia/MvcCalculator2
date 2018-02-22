@@ -62,7 +62,7 @@ button:hover {
 
 /* ======== CALCULATOR ======== */
 .maindisplay {
-  width: 25em;
+  width: 90%;
   height: 6em;
   margin: auto;
   background-color: #efefef;

@@ -2,10 +2,10 @@
 @model IEnumerable<Mvc5Calculator.Models.Converter>
 
 <link href="~/Content/StyleSheet1.css" rel="stylesheet" />
+<table>
+    @foreach (var item in Model)
+    {
 
-@foreach (var item in Model)
-{
-    <table>
         <tr id="convexp">
             <td>
                 @Html.DisplayFor(modelItem => item.FromValue)
@@ -21,5 +21,6 @@
                 @Html.DisplayFor(modelItem => item.ToUnit)
             </td>
         </tr>
-    </table>
-}
+    }
+</table>
+    

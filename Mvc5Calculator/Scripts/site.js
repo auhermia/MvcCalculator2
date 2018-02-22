@@ -98,7 +98,6 @@
             url: "/Calculator/CalcPartial",
             type: "GET",
             success: function (result) {
-                alert("calcpartial");
                 $("#expression").html(result);
             }
         });
@@ -121,10 +120,10 @@
             url: (isConverter == true) ? "/Converter/Delete" : "/Calculator/Delete",
             success: function () {
                 if (isConverter == true) {
-                    $("#convexp").hide();
+                    convertPartial();
                 }
                 else {
-                    $("#calcexp").hide();
+                    calcPartial();
                 }
             }
         })
@@ -134,16 +133,20 @@
     *                   CALCULATOR			            *
     * ================================================= */
 
+    // set default display values
     topDisplay.text('');
     bottomDisplay.text('0');
 
+    // define object 
     var calculatorObj = Calculator();
 
+    // refresh display upon each action
     calculatorObj.change( function (){
         bottomDisplay.text(calculatorObj.currentState());
         topDisplay.text(calculatorObj.previousState());
     });
 
+    // actions 
     $('.num').click(function (e) {
         calculatorObj.num($(e.target).text());
     });
@@ -166,7 +169,6 @@
         calculatorObj.Reset();
     });
 
-    // Clear everything on display
     $('#clear').click(function () {
         calculatorObj.Clear();
     });
@@ -190,23 +192,24 @@
         else if (key === 55) { calculatorObj.num(7); }
         else if (key === 56) { calculatorObj.num(8); }
         else if (key === 57) { calculatorObj.num(9); }
-        else if (key === 42) { calculatorObj.Operator('×'); }
-        else if (key === 43) { calculatorObj.Operator('+'); }
-        else if (key === 45) { calculatorObj.Operator('-'); }
-        else if (key === 46) { calculatorObj.Operator('.'); }
-        else if (key === 47) { calculatorObj.Operator('÷'); }
-        else if (key === 94) { calculatorObj.Operator('^'); }
-        else if (key === 27) { calculatorObj.Clear(); } // fix
+        else if (key === 42) { calculatorObj.operator('×'); }
+        else if (key === 43) { calculatorObj.operator('+'); }
+        else if (key === 45) { calculatorObj.operator('-'); }
+        else if (key === 46) { calculatorObj.operator('.'); }
+        else if (key === 47) { calculatorObj.operator('÷'); }
+        else if (key === 94) { calculatorObj.operator('^'); }
+        else if (key === 27) { calculatorObj.Clear(); }
+        else if (key === 08) { calculatorObj.backspace(); }
         else if (key === 61 || key === 13) { $("#equal").click(); } // return fix
         else { return false; }
     });
 
     /* ================================================ *
-    *                   UNIT CONVERSION		            *
+    *                   UNIT CONVERTER		            *
     * ================================================= */
 
 
-    // function to append units of conversion type
+    // to determine which subtypes to display
     function appendOption(convert_type) {
         $.each(convert_type, function (i, item) {
             $("#fromUnit, #toUnit").append("<option value='" + item.Id + "'>" + item.Property[1] + "</option>");

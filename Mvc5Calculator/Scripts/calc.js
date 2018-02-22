@@ -62,14 +62,14 @@
         //}
         changeHandler();
     }
+    // reset values post evaluation
     function Reset() {
-
-        // reset values
         _value1 = "";
         _value2 = "";
         _operator = "";
         calcFirst = false;
     }
+    // clear current expression
     function Clear() {
         _value1 = "";
         _value2 = "";
@@ -79,7 +79,7 @@
         changeHandler();
     }
 
-    // ajax call test
+    // evaluate expression through server
     function Eval(v2, v1, operator) {
         $.ajax({
             method: "POST",
@@ -99,18 +99,18 @@
             }
         });
     }
-
+    // save data to db
     function AddCalc(v2, v1, operator, result) {
         $.ajax({
             method: "POST",
             async: false,
             url: "/Calculator/AddCalc",
-            data: { Operand1: v2, Operand2: v1, Operator: operator, Result: result },
-            success: function (response) {
-                alert("successful db save");
-                // cant call calcPartial from here
-                //calcPartial.call();
-            }
+            data: { Operand1: v2, Operand2: v1, Operator: operator, Result: result }
+            //success: function (response) {
+            //    alert("successful db save");
+            //    // cant call calcPartial from here
+            //    //calcPartial.call();
+            //}
         });
     }
     

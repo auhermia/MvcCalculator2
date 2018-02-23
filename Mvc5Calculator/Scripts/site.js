@@ -199,7 +199,7 @@
         else if (key === 47) { calculatorObj.operator('÷'); }
         else if (key === 94) { calculatorObj.operator('^'); }
         else if (key === 27) { calculatorObj.Clear(); }
-        else if (key === 08) { calculatorObj.backspace(); }
+        else if (key === 8) { calculatorObj.backspace(); }
         else if (key === 61 || key === 13) { $("#equal").click(); } // return fix
         else { return false; }
     });

@@ -34,10 +34,23 @@
     function num(val) {
         _value1 += val;
         _currentState = _value1;
+        //console.log( _value1.indexOf('.'));
+
         //if (operator == '') {
         //    _previousState = "";
         //    calcFirst = true;
         //}
+
+        if (val === '.') {
+            if (_value1.indexOf('.') === -1) {
+
+                console.log("true");
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
         changeHandler();
     }
     function plusMinus() {
@@ -87,15 +100,17 @@
             url: "/Calculator/Evaluate",
             data: { a: v2, b: v1, operation: operator },
             success: function (resultMVC) {
-                console.log("hEy tHiS wOrKs");
                 _previousState = _value2 + " " + _operator + " " + _value1;
                 _currentState = resultMVC;
                 _result = resultMVC;
-                AddCalc(_value2, _value1, _operator, _result);
+                AddCalc(_value2, _value1, _operator, _result);     
                 changeHandler();
             },
             error: function (error) {
-                alert(error);
+                //alert(error);
+                _previousState = "";
+                _currentState = "Syntax Error";
+                changeHandler();
             }
         });
     }

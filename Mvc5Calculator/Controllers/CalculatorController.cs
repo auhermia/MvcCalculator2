@@ -25,23 +25,32 @@ namespace Mvc5Calculator.Controllers
         {
             double result = 0;
 
-            switch (operation)
+            try
             {
-                case '+':
-                    result = a + b;
-                    break;
-                case '-':
-                    result = a - b;
-                    break;
-                case '×':
-                    result = a * b;
-                    break;
-                case '÷':
-                    result = a / b;
-                    break;
-                case '^':
-                    result = Math.Pow(a, b);
-                    break;
+                switch (operation)
+                {
+                    case '+':
+                        result = a + b;
+                        break;
+                    case '-':
+                        result = a - b;
+                        break;
+                    case '×':
+                        result = a * b;
+                        break;
+                    case '÷':
+                        result = a / b;
+                        break;
+                    case '^':
+                        result = Math.Pow(a, b);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch
+            {
+                return null;
             }
             //System.Diagnostics.Debug.WriteLine(TempData["Operator"]);
             return Json(result);

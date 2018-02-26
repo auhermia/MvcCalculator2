@@ -62,7 +62,7 @@ button:hover {
 
 /* ======== CALCULATOR ======== */
 .maindisplay {
-  width: 90%;
+  width: 95%;
   height: 6em;
   margin: auto;
   background-color: #efefef;
@@ -154,3 +154,4 @@ button:hover {
     padding: .25em;
     /*border: 1px solid red;*/
     color: #808080; }
+

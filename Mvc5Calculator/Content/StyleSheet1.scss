@@ -88,17 +88,15 @@ button:hover {
     border-radius: .3em;
     padding-top: 1.5em;
     padding-left: 2%;
-
     button {
         @include stdbutton(1.25em, 48%);
     }
 }
 
-
 /* ======== CALCULATOR ======== */
 
 .maindisplay {
-    width: 90%;
+    width: 95%;
     height: 6em;
     margin: auto;
     background-color: $offwhite;
@@ -155,8 +153,6 @@ button:hover {
     margin-left: 32em;
     background-color: $darkgray;
     border-radius: .3em;
-   
-
     button {
         @include stdbutton(1.5em, 70%);
         position: absolute;

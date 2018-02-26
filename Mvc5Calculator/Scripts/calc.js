@@ -1,13 +1,14 @@
 ﻿function Calculator() {
+    var self = this;
     var _value1 = "";
     var _value2 = "";
-    var changeHandler;
     var _operator = "";
-    var calcFirst = true;
-    var self = this;
-    var _previousState;
-    var _currentState;
     var _result = "";
+    var _previousState;     // topDisplay
+    var _currentState;      // bottomDisplay
+    var changeHandler;      // update display for currentState and previousState
+    var newCalc = true;     // no previous calculation exist on display
+    
 
     function change(handler) {
         changeHandler = handler;
@@ -32,47 +33,33 @@
     }
 
     function num(val) {
+        // allow 1 instance of decimal pt
+        if (val === '.' && _value1.indexOf('.') !== -1) {S
+            return false;
+        }
         _value1 += val;
         _currentState = _value1;
-        //console.log( _value1.indexOf('.'));
-
-        //if (operator == '') {
-        //    _previousState = "";
-        //    calcFirst = true;
-        //}
-
-        if (val === '.') {
-            if (_value1.indexOf('.') === -1) {
-
-                console.log("true");
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
-        changeHandler();
+        changeHandler();       
     }
     function plusMinus() {
         _value1 = _value1 * -1;
         _currentState = _value1;
         changeHandler();
     }
-
     function backspace() {
         _value1 = _value1.slice(0, -1);
         _currentState = _value1;
         changeHandler();
     }
     function operator(op) {
+        if (newCalc == false) {
+            _value1 = _result;
+        }
         _operator = op;
         _previousState = _value1 + " " + _operator;
         _currentState = "";
         _value2 = _value1;
         _value1 = "";
-        //if (calcFirst == false) {
-        //    value1 = result;
-        //}
         changeHandler();
     }
     // reset values post evaluation
@@ -80,15 +67,15 @@
         _value1 = "";
         _value2 = "";
         _operator = "";
-        calcFirst = false;
+        newCalc = false;
     }
-    // clear current expression
+    // reset current expression
     function Clear() {
         _value1 = "";
         _value2 = "";
         _previousState = "";
         _currentState = 0;
-        calcFirst = true;
+        newCalc = true;
         changeHandler();
     }
 
@@ -103,11 +90,12 @@
                 _previousState = _value2 + " " + _operator + " " + _value1;
                 _currentState = resultMVC;
                 _result = resultMVC;
-                AddCalc(_value2, _value1, _operator, _result);     
+                AddCalc(_value2, _value1, _operator, _result);
                 changeHandler();
+                newCalc = false;
+                console.log(newCalc);
             },
-            error: function (error) {
-                //alert(error);
+            error: function () {
                 _previousState = "";
                 _currentState = "Syntax Error";
                 changeHandler();

@@ -1,4 +1,6 @@
-﻿$(document).ready(function () {
+﻿// 2/26/18 - fix newCalc order
+
+$(document).ready(function () {
 
     /* ================================================ *
     *                    DEFININITIONS     	            *
@@ -172,12 +174,6 @@
     $('#clear').click(function () {
         calculatorObj.Clear();
     });
-    
-        //siri.on(function (text) {
-        //    if (text == '2') {
-        //        calculatorObj.num(2)
-        //    }
-        //})
 
     // enable user to use keyboard for calculations
     $(document).keypress(function (e) {
@@ -192,23 +188,23 @@
         else if (key === 55) { calculatorObj.num(7); }
         else if (key === 56) { calculatorObj.num(8); }
         else if (key === 57) { calculatorObj.num(9); }
+        else if (key === 46) { calculatorObj.num('.'); }
         else if (key === 42) { calculatorObj.operator('×'); }
         else if (key === 43) { calculatorObj.operator('+'); }
         else if (key === 45) { calculatorObj.operator('-'); }
-        else if (key === 46) { calculatorObj.operator('.'); }
         else if (key === 47) { calculatorObj.operator('÷'); }
         else if (key === 94) { calculatorObj.operator('^'); }
-        else if (key === 27) { calculatorObj.Clear(); }
+        else if (key === 27) { calculatorObj.Clear(); } // to-do: fix
         else if (key === 8) { calculatorObj.backspace(); }
-        else if (key === 61 || key === 13) { $("#equal").click(); } // return fix
+        //else if (key === 13) { alert("you pressed enter"); }
+        else if (key === 13 || key === 61) { $("#equal").click(); } // to-do - fix carriage return equal
         else { return false; }
     });
 
     /* ================================================ *
     *                   UNIT CONVERTER		            *
     * ================================================= */
-
-
+    
     // to determine which subtypes to display
     function appendOption(convert_type) {
         $.each(convert_type, function (i, item) {
@@ -219,11 +215,11 @@
     // when user switches conversion type in dropdown
     type.on('change', function () {
 
+        let typeVal = type.val();
+
         //reset unit dropdown to ''
         $('#fromUnit, #toUnit').html('');
         $('#from, #to').val('');
-
-        let typeVal = type.val();
 
         // display appropriate units when unit type is selected
         if (typeVal == "Mass") {
@@ -266,8 +262,10 @@
         
         // length
         if (typeVal == "Length") {
+            // find unit ID in array based on fromUnit
             var fromCoeff = length.filter(function (unit) {
                 return (unit.Id == fromUnit);
+            //  find coefficient based on unit ID
             }).map(function (unit) {
                 return (unit.Property[0]);
             });
@@ -336,6 +334,7 @@
         }
         // temperature
         else {
+            // note - equations not linearly scaled.  conversions performed in controller
             var toCoeff = 1;
             var fromCoeff = 1;
         }
@@ -375,3 +374,16 @@
     }
 
 }); // end of script
+
+
+/* graveyard
+
+        //siri.on(function (text) {
+        //    if (text == '2') {
+        //        calculatorObj.num(2)
+        //    }
+        //})
+
+
+
+*/

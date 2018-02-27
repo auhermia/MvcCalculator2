@@ -51,8 +51,8 @@ $(document).ready(function () {
         { 'Id': 'h', 'Property': [24, 'Hour (h)'] },
         { 'Id': 'min', 'Property': [1440, 'Minute (min)'] },
         { 'Id': 'sec', 'Property': [86400, 'Second (sec)'] },
-        { 'Id': 'w', 'Property': [0.142857, 'Week (w)'] },
-        { 'Id': 'm', 'Property': [0.0328767, 'Month (m)'] },
+        { 'Id': 'wk', 'Property': [0.142857, 'Week (w)'] },
+        { 'Id': 'mo', 'Property': [0.0328767, 'Month (m)'] },
         { 'Id': 'yr', 'Property': [0.00273973, 'Year (yr)'] }
     ];
     var volume = [
@@ -84,7 +84,7 @@ $(document).ready(function () {
         isConverter = false;
     });
 
-    // display converter portion, hide calculatro
+    // display converter portion, hide calculator
     convertbutton.click(function () {
         calculator.hide();
         converter.show();
@@ -92,7 +92,6 @@ $(document).ready(function () {
         appendOption(length);
         isConverter = true;
     });
-
 
     // Partial View Load function - calculator
     function calcPartial() {
@@ -196,7 +195,6 @@ $(document).ready(function () {
         else if (key === 94) { calculatorObj.operator('^'); }
         else if (key === 27) { calculatorObj.Clear(); } // to-do: fix
         else if (key === 8) { calculatorObj.backspace(); }
-        //else if (key === 13) { alert("you pressed enter"); }
         else if (key === 13 || key === 61) { $("#equal").click(); } // to-do - fix carriage return equal
         else { return false; }
     });
@@ -211,7 +209,6 @@ $(document).ready(function () {
             $("#fromUnit, #toUnit").append("<option value='" + item.Id + "'>" + item.Property[1] + "</option>");
         });
     }
-
     // when user switches conversion type in dropdown
     type.on('change', function () {
 
@@ -237,12 +234,13 @@ $(document).ready(function () {
         }
     });
 
-    // Enable keyboard input: allow only numeric values (ascii 48-57), decimal (ascii 46), 
-    //      '-', and backspace (ascii 8)
-
+    // Enable keyboard input
     // to do - check negative sign
     $("#from").keypress(function (e) {
-        if (e.which != 8 && e.which != 46 && (e.which < 48 || e.which > 57)) {
+        if (e.which != 8                            // backspace
+            && e.which != 45                        // negative sign (temperature)
+            && e.which != 46                        // decimal pt
+            && (e.which < 48 || e.which > 57)) {    // 0-9
             return false;
         }
     });
@@ -334,7 +332,7 @@ $(document).ready(function () {
         }
         // temperature
         else {
-            // note - equations not linearly scaled.  conversions performed in controller
+            // note - equations not linearly scaled.  equations in controller
             var toCoeff = 1;
             var fromCoeff = 1;
         }
@@ -342,7 +340,7 @@ $(document).ready(function () {
         Convert(fromUnit, fromValue, fromCoeff, toUnit, toCoeff);
     });
 
-    // Perform conversion
+    // Ajax call to controller to perform conversion
     function Convert(fromUnit, fromValue, fromCoeff, toUnit, toCoeff) {
         $.ajax({
             method: "POST",
@@ -368,6 +366,7 @@ $(document).ready(function () {
                 ToValue: toValue, FromUnit: fromUnit, FromValue: fromValue, ToUnit: toUnit
             },
             success: function () {
+                // refresh partial view. new conversion will appear
                 convertPartial();
             }
         })

@@ -34,8 +34,12 @@
 
     function num(val) {
         // allow 1 instance of decimal pt
-        if (val === '.' && _value1.indexOf('.') !== -1) {S
+        if (val === '.' && _value1.indexOf('.') !== -1) {
             return false;
+        }
+        if (_operator === '') {
+            newCalc = true;
+            _previousState = "";
         }
         _value1 += val;
         _currentState = _value1;
@@ -78,7 +82,6 @@
         newCalc = true;
         changeHandler();
     }
-
     // evaluate expression through server
     function Eval(v2, v1, operator) {
         $.ajax({
@@ -93,7 +96,6 @@
                 AddCalc(_value2, _value1, _operator, _result);
                 changeHandler();
                 newCalc = false;
-                console.log(newCalc);
             },
             error: function () {
                 _previousState = "";

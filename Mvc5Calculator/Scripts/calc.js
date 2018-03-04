@@ -5,11 +5,10 @@
     var _operator = "";
     var _result = "";
     var _previousState;     // topDisplay
-    var _currentState;      // bottomDisplay
+    var _currentState = 0;  // bottomDisplay
     var changeHandler;      // update display for currentState and previousState
     var newCalc = true;     // no previous calculation exist on display
     
-
     function change(handler) {
         changeHandler = handler;
     }
@@ -86,16 +85,15 @@
     function Eval(v2, v1, operator) {
         $.ajax({
             method: "POST",
-            async: false, // keep or value1 & value = ""
+            // async set to false for calcPartial and Reset functions
+            async: false,
             url: "/Calculator/Evaluate",
             data: { a: v2, b: v1, operation: operator },
             success: function (resultMVC) {
-                _previousState = _value2 + " " + _operator + " " + _value1;
-                _currentState = resultMVC;
+                console.log("eval success");
                 _result = resultMVC;
                 AddCalc(_value2, _value1, _operator, _result);
-                changeHandler();
-                newCalc = false;
+
             },
             error: function () {
                 _previousState = "";
@@ -110,12 +108,17 @@
             method: "POST",
             async: false,
             url: "/Calculator/AddCalc",
-            data: { Operand1: v2, Operand2: v1, Operator: operator, Result: result }
-            //success: function (response) {
-            //    alert("successful db save");
-            //    // cant call calcPartial from here
-            //    //calcPartial.call();
-            //}
+            data: { Operand1: v2, Operand2: v1, Operator: operator, Result: result },
+            success: function (response) {
+                console.log("successful db save");
+                _previousState = _value2 + " " + _operator + " " + _value1;
+                _currentState = _result;
+                changeHandler();
+                newCalc = false;
+            },
+            error: function (response) {
+                console.log(response);
+            }
         });
     }
     

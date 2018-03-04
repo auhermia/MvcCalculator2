@@ -166,6 +166,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Scripts\site2.js" />
     <Content Include="Content\StyleSheet1.css">
       <DependentUpon>StyleSheet1.scss</DependentUpon>
     </Content>

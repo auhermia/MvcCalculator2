@@ -32,7 +32,6 @@ $btnpadding: .6em;
     font-size: $fontsize;
 }
 
-
 * {
     font-family: 'Oswald';
     &:focus {
@@ -43,7 +42,6 @@ $btnpadding: .6em;
 body {
     background-color: $lightgray;
 }
-
 input {
     width: 45%;
     background-color: $darkgray;
@@ -52,23 +50,19 @@ input {
     border-bottom: 2px solid $lightgray;
     font-size: 1.25em;
 }
-
 p {
     color: $lightgray;
     font-size: 1.5em;
     text-align: center;
     margin-top: 1em;
 }
-
 select {
-    @include dropdown(45%, 1.25em);
+    @include dropdown(50%, 1.25em);
 }
-
 button:hover {
     color: $darkgray;
     background-color: $lightgray;
 }
-
 .container{
     margin: auto;
     margin-top: 3em;
@@ -79,26 +73,31 @@ button:hover {
 /* ============================================
                    PANEL 1  
 ============================================= */
-
-.menu {
+.navigation {
     float: left;
     background-color: $darkgray;
     width: 30em;
     height: 40em;
     border-radius: .3em;
     padding-top: 1.5em;
-    padding-left: 2%;
+    //padding-left: 2%;
     button {
-        @include stdbutton(1.25em, 48%);
+        @include stdbutton(1.25em, 45%);
+    }
+    .navButtons{
+        text-align:center;
     }
 }
 
 /* ======== CALCULATOR ======== */
-
+#calculator {
+    width: 90%;
+    margin: auto;
+}
 .maindisplay {
-    width: 95%;
     height: 6em;
     margin: auto;
+    margin-bottom: 1em;
     background-color: $offwhite;
     border-radius: .3em;
     padding: .6em;
@@ -110,31 +109,35 @@ button:hover {
         @include display(right, 2.5em);
     }
 }
+.btnRow {
+    // for debugging
+    //background-color: yellow;
+    text-align: center;
+    //margin-left: .25em;
+    //margin-right: .25em;
+    padding: .5em .25em .5em .25em;
+    margin-left: -2%;
 
-.row {
-    display: flex;
-    padding: .6em;
     button {
-        @include stdbutton(1.5em, 20%);
+        @include stdbutton(1.5em, 22%);
         height: 30%;
-        margin-left: .6em;
-        //margin-right: .4em;
+        margin-left: 2.3%;
+        //margin-right: .3em;
+        //background-color: red;
     }
 }
 
 /* ======== UNIT CONVERTER ======== */
-
 .converter {
     width: 19em;
     height: 25.6em;
     margin: auto;
     margin-top: 20%;
+    margin-bottom: 5%;
 }
-
 #type {
     @include dropdown(100%, 1.5em);
 }
-
 #convert_equal {
     width: 70%;
     margin: 15% 15% 15% 15%;
@@ -143,7 +146,6 @@ button:hover {
 /* ============================================
                    PANEL 2
 ============================================= */
-
 .memory {
     //width: 30em;
     height: 40em;
@@ -169,7 +171,6 @@ button:hover {
             overflow-x: hidden;
         }
     }
-        
     tr{
         &:hover td{
             background-color: $lightgray;

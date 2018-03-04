@@ -13,7 +13,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
     <script src="~/Scripts/calc.js"></script>
-    <script src="~/Scripts/site.js"></script>
+    <script src="~/Scripts/site2.js"></script>
+    @*<script src="~/Scripts/site.js"></script>*@
     
     <title>Calculator</title>
 </head>
@@ -21,76 +22,71 @@
 <body>
     <div class="container">
         <!-- =============== PANEL 1 =============== -->
-        <div class="menu">
-            <!-- =============== CALCULATOR =============== -->
-            <div id="calculator">
-                <div class="maindisplay">
-                    <div id="topdisplay"></div>
-                    <div id="bottomdisplay"></div>
+        <div class="navigation">
+            <div class="navItem">
+                <!-- =============== CALCULATOR =============== -->
+                <div id="calculator">
+                    <div class="maindisplay">
+                        <div id="topdisplay"></div>
+                        <div id="bottomdisplay"></div>
+                    </div>
+                    <div class="btnRow">
+                        <button id="clear">C</button>
+                        <button id="backspace">&#10229</button>
+                        <button id="expo" class="operator">^</button>
+                        <button class="operator">&#247</button>
+                    </div>
+                    <div class="btnRow">
+                        <button class="num">7</button>
+                        <button class="num">8</button>
+                        <button class="num">9</button>
+                        <button class="operator">&#215</button>
+                    </div>
+                    <div class="btnRow">
+                        <button class="num">4</button>
+                        <button class="num">5</button>
+                        <button class="num">6</button>
+                        <button class="operator">-</button>
+                    </div>
+                    <div class="btnRow">
+                        <button class="num">1</button>
+                        <button class="num">2</button>
+                        <button class="num">3</button>
+                        <button class="operator">+</button>
+                    </div>
+                    <div class="btnRow">
+                        <button class="num">0</button>
+                        <button id="decimal" class="num">.</button>
+                        <button id="plusminus">&#177</button>
+                        <button id="equal">=</button>
+                    </div>
                 </div>
-                <div class="row">
-                    <button id="clear">C</button>
-                    <button id="backspace">&#10229</button>
-                    <button id="expo" class="operator">^</button>
-                    <button class="operator">&#247</button>
+                <!-- =============== UNIT CONVERTER =============== -->
+                <div id="converter" class="converter">
+                    <select id="type">
+                        <option>Length</option>
+                        <option>Mass</option>
+                        <option>Temperature</option>
+                        <option>Time</option>
+                        <option>Volume</option>
+                    </select>
+                    <!-- From -->
+                    <p>FROM:</p>
+                    <input id="from" type="text" />
+                    <select id="fromUnit"></select>
+                    <!-- To -->
+                    <p>TO:</p>
+                    <input id="to" type="text" />
+                    <select id="toUnit"></select>
+                    <button id="convert_equal">Convert</button>
                 </div>
-                <div class="row">
-                    <button class="num">7</button>
-                    <button class="num">8</button>
-                    <button class="num">9</button>
-                    <button class="operator">&#215</button>
-                </div>
-                <div class="row">
-                    <button class="num">4</button>
-                    <button class="num">5</button>
-                    <button class="num">6</button>
-                    <button class="operator">-</button>
-                </div>
-                <div class="row">
-                    <button class="num">1</button>
-                    <button class="num">2</button>
-                    <button class="num">3</button>
-                    <button class="operator">+</button>
-                </div>
-                <div class="row">
-                    <button class="num">0</button>
-                    <button id="decimal" class="num">.</button>
-                    <button id="plusminus">&#177</button>
-                    <button id="equal">=</button>
-                </div>
-            </div>
-            <!-- =============== UNIT CONVERTER =============== -->
-            <div id="converter" class="converter">
-                <select id="type">
-                    <option>Length</option>
-                    <option>Mass</option>
-                    <option>Temperature</option>
-                    <option>Time</option>
-                    <option>Volume</option>
-                </select>
-                <!-- From -->
-                <p>FROM:</p>
-                <input id="from" type="text" />
-                <select id="fromUnit"></select>
-                <!-- To -->
-                <p>TO:</p>
-                <input id="to" type="text" />
-                <select id="toUnit"></select>
-                <button id="convert_equal">Convert</button>
-            </div>
-
+            </div><!--end of navItem-->
             <!-- =============== NAVIGATION =============== -->
-
-            @*@Ajax.ActionLink("Calculator", "PartialTest", new AjaxOptions()
-                {
-                   HttpMethod = "GET",
-                    UpdateTargetId = "expression",
-                    InsertionMode = InsertionMode.Replace
-               })*@
+        <div class="navButtons">
             <button id="calcbutton">Calculator</button>
             <button id="convertbutton">Unit Conversion</button>
         </div>
-
+        </div><!--end of navigation-->
         <!-- =============== PANEL 2 =============== -->
         <div id="memory" class="memory">
             <div class="tableDisplay">
@@ -98,9 +94,19 @@
             </div>
             <button id="clearMem">Clear Memory</button>
         </div>
-    </div>
+    </div><!--end of container-->
     
 </body>
 
 </html>
+
+<!-- graveyard
+    
+                @*@Ajax.ActionLink("Calculator", "PartialTest", new AjaxOptions()
+                {
+                   HttpMethod = "GET",
+                    UpdateTargetId = "expression",
+                    InsertionMode = InsertionMode.Replace
+               })*@
+    -->
 

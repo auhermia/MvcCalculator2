@@ -23,7 +23,7 @@ p {
 
 select {
   background-color: #efefef;
-  width: 45%;
+  width: 50%;
   font-size: 1.25em; }
 
 button:hover {
@@ -39,15 +39,14 @@ button:hover {
 /* ============================================
                    PANEL 1  
 ============================================= */
-.menu {
+.navigation {
   float: left;
   background-color: #3e3e3e;
   width: 30em;
   height: 40em;
   border-radius: .3em;
-  padding-top: 1.5em;
-  padding-left: 2%; }
-  .menu button {
+  padding-top: 1.5em; }
+  .navigation button {
     border: 0.125em solid #808080;
     border-radius: 1em;
     background-color: #3e3e3e;
@@ -55,16 +54,22 @@ button:hover {
     color: #808080;
     text-align: center;
     font-size: 1.25em;
-    width: 48%; }
-    .menu button:hover {
+    width: 45%; }
+    .navigation button:hover {
       color: #3e3e3e;
       background-color: #808080; }
+  .navigation .navButtons {
+    text-align: center; }
 
 /* ======== CALCULATOR ======== */
+#calculator {
+  width: 90%;
+  margin: auto; }
+
 .maindisplay {
-  width: 95%;
   height: 6em;
   margin: auto;
+  margin-bottom: 1em;
   background-color: #efefef;
   border-radius: .3em;
   padding: .6em;
@@ -76,10 +81,11 @@ button:hover {
     text-align: right;
     font-size: 2.5em; }
 
-.row {
-  display: flex;
-  padding: .6em; }
-  .row button {
+.btnRow {
+  text-align: center;
+  padding: .5em .25em .5em .25em;
+  margin-left: -2%; }
+  .btnRow button {
     border: 0.125em solid #808080;
     border-radius: 1em;
     background-color: #3e3e3e;
@@ -87,10 +93,10 @@ button:hover {
     color: #808080;
     text-align: center;
     font-size: 1.5em;
-    width: 20%;
+    width: 22%;
     height: 30%;
-    margin-left: .6em; }
-    .row button:hover {
+    margin-left: 2.3%; }
+    .btnRow button:hover {
       color: #3e3e3e;
       background-color: #808080; }
 
@@ -99,7 +105,8 @@ button:hover {
   width: 19em;
   height: 25.6em;
   margin: auto;
-  margin-top: 20%; }
+  margin-top: 20%;
+  margin-bottom: 5%; }
 
 #type {
   background-color: #efefef;
@@ -153,4 +160,3 @@ button:hover {
     padding: .25em;
     /*border: 1px solid red;*/
     color: #808080; }
-

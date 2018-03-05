@@ -59,9 +59,18 @@ p {
 select {
     @include dropdown(50%, 1.25em);
 }
-button:hover {
-    color: $darkgray;
-    background-color: $lightgray;
+tr {
+    &:hover td {
+        background-color: $lightgray;
+        color: $darkgray;
+    }
+}
+td {
+    text-align: center;
+    font-size: 1.5em;
+    vertical-align: middle;
+    padding: .25em;
+    color: $lightgray;
 }
 .container{
     margin: auto;
@@ -80,7 +89,6 @@ button:hover {
     height: 40em;
     border-radius: .3em;
     padding-top: 1.5em;
-    //padding-left: 2%;
     button {
         @include stdbutton(1.25em, 45%);
     }
@@ -110,20 +118,13 @@ button:hover {
     }
 }
 .btnRow {
-    // for debugging
-    //background-color: yellow;
     text-align: center;
-    //margin-left: .25em;
-    //margin-right: .25em;
     padding: .5em .25em .5em .25em;
     margin-left: -2%;
-
     button {
         @include stdbutton(1.5em, 22%);
         height: 30%;
         margin-left: 2.3%;
-        //margin-right: .3em;
-        //background-color: red;
     }
 }
 
@@ -147,7 +148,6 @@ button:hover {
                    PANEL 2
 ============================================= */
 .memory {
-    //width: 30em;
     height: 40em;
     text-align: center;
     padding: 5%;
@@ -170,19 +170,5 @@ button:hover {
             margin: 0 auto;
             overflow-x: hidden;
         }
-    }
-    tr{
-        &:hover td{
-            background-color: $lightgray;
-            color: $darkgray;
-        }
-    }
-    td {
-        text-align: center;
-        font-size: 1.5em;
-        vertical-align: middle;
-        padding: .25em;
-        /*border: 1px solid red;*/
-        color: $lightgray;
     }
 }

@@ -93,7 +93,6 @@
                 console.log("eval success");
                 _result = resultMVC;
                 AddCalc(_value2, _value1, _operator, _result);
-
             },
             error: function () {
                 _previousState = "";

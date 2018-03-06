@@ -148,14 +148,7 @@ var runCalcConv = (function () {
         $.ajax({
             method: "POST",
             url: (selectorCtrl.isConverter === true) ? "/Converter/Delete" : "/Calculator/Delete",
-            success: function () {
-                if (selectorCtrl.isConverter === true) {
-                    convertPartial();
-                }
-                else {
-                    calcPartial();
-                }
-            }
+            success: (selectorCtrl.isConverter === true) ? convertPartial() : calcPartial
         });
     }
 
@@ -431,7 +424,6 @@ var runCalcConv = (function () {
         selectorCtrl = bindSelectorCtrl();
         unitMappingCtrl = bindUnitMappingCtrl();
         bindFunctions();
-        console.log("msg from init");
     }
     return {
         init: init

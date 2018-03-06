@@ -13,17 +13,15 @@ namespace Mvc5Calculator.Controllers
         private ConverterDBContext db = new ConverterDBContext();
 
         // GET: Converter
-        public ActionResult Index()
-        {
-            return View();
-        }
+        //public ActionResult Index()
+        //{
+        //    return View();
+        //}
 
         // Conversions
         public JsonResult Convert(string fromUnit, float fromValue, float fromCoeff,
                                   string toUnit, float toCoeff )
         {
-            System.Diagnostics.Debug.WriteLine(fromUnit);
-
             float toValue = 0;
 
             // temperature conversion
@@ -40,22 +38,18 @@ namespace Mvc5Calculator.Controllers
             {
                 toValue = fromValue * (1 / fromCoeff) * toCoeff;
             }
-
-            System.Diagnostics.Debug.WriteLine(toValue);
             return Json(toValue);
         }
         
         public PartialViewResult ConvertPartial()
         {
-            List<Converter> model = db.Converter.ToList();
-            return PartialView("ConvertPartial", model);
+            return PartialView("ConvertPartial", db.Converter.ToList());
         }
 
         // Save to DB
         [HttpPost]
         public ActionResult AddConvert(string fromUnit, float fromValue, string toUnit, float toValue)
         {
-            System.Diagnostics.Debug.WriteLine("This shows up");
             try
             {
                 Converter convertObj = new Converter
@@ -69,12 +63,10 @@ namespace Mvc5Calculator.Controllers
                 db.Converter.Add(convertObj);
                 db.SaveChanges();
             }
-
             catch(Exception ex)
             {
                 return Content("Error occured " + ex);
             }
-
             return RedirectToAction("Index", "Calculator");
         }
 

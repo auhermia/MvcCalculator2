@@ -17,7 +17,6 @@ namespace Mvc5Calculator.Controllers
         // GET: Calculator
         public ActionResult Index()
         {
-            //return View(db.Calculator.ToList());
             return View();
         }
 
@@ -52,7 +51,6 @@ namespace Mvc5Calculator.Controllers
             {
                 return null;
             }
-            //System.Diagnostics.Debug.WriteLine(TempData["Operator"]);
             return Json(result);
         }
 
@@ -60,9 +58,9 @@ namespace Mvc5Calculator.Controllers
         public PartialViewResult CalcPartial()
         {
             // why specify model?
-            List<Calculator> model = db.Calculator.ToList();
-            return PartialView("CalcPartial", model);
-            //return PartialView("PartialTest", db.Calculator.ToList());
+            //List<Calculator> model = db.Calculator.ToList();
+            //return PartialView("CalcPartial", model);
+            return PartialView("CalcPartial", db.Calculator.ToList());
         }
 
         // POST DATA TO DB

@@ -1,8 +1,4 @@
-﻿$(document).ready(function () {
-    runCalcConv.init();
-});
-
-// main function - run everything
+﻿// main function
 var runCalcConv = (function () {
 
     // object to hold all selector assignments
@@ -148,7 +144,7 @@ var runCalcConv = (function () {
         $.ajax({
             method: "POST",
             url: (selectorCtrl.isConverter === true) ? "/Converter/Delete" : "/Calculator/Delete",
-            success: (selectorCtrl.isConverter === true) ? convertPartial() : calcPartial
+            success: (selectorCtrl.isConverter === true) ? convertPartial() : calcPartial()
         });
     }
 
@@ -178,9 +174,6 @@ var runCalcConv = (function () {
         calculatorObj.operator($(e.target).text());
     }
     var equalFunc = function () {
-        console.log(calculatorObj.getVal2());
-        console.log(calculatorObj.getOperator());
-        console.log(calculatorObj.getVal1());
         calculatorObj.Eval(calculatorObj.getVal2(), calculatorObj.getVal1(), calculatorObj.getOperator());
         // note - AddCalc does not call calcPartial after success because calc.js is loaded first
         calcPartial();
@@ -430,3 +423,7 @@ var runCalcConv = (function () {
     }
 
 })();
+
+$(document).ready(function () {
+    runCalcConv.init();
+});

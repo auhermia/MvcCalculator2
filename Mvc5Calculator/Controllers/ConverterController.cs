@@ -12,12 +12,6 @@ namespace Mvc5Calculator.Controllers
     {
         private ConverterDBContext db = new ConverterDBContext();
 
-        // GET: Converter
-        //public ActionResult Index()
-        //{
-        //    return View();
-        //}
-
         // Conversions
         public JsonResult Convert(string fromUnit, float fromValue, float fromCoeff,
                                   string toUnit, float toCoeff )

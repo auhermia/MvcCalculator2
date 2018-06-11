@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = "Converter";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <link href="~/Content/StyleSheet1.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Scripts/calc.js"></script>
+    <script src="~/Scripts/site2.js"></script>
+    <title>Converter</title>
+</head>
+
+<body>
+    <div class="container">
+        <!-- =============== PANEL 1 =============== -->
+        <div class="navigation">
+            <div class="navItem">
+                <!-- =============== UNIT CONVERTER =============== -->
+                <div id="converter" class="converter">
+                    @Html.DropDownList("UnitTypes", null, new { @id = "unitType" })
+                    @Html.DropDownList("UnitList", null, new { @id = "unitList" })
+                    <!-- From -->
+                    <p>FROM:</p>
+                    <input id="from" type="text" />
+                    <select id="fromUnit"></select>
+                    <!-- To -->
+                    <p>TO:</p>
+                    <input id="to" type="text" />
+                    <select id="toUnit"></select>
+                    <button id="convert_equal">Convert</button>
+                </div>
+            </div><!--end of navItem-->
+            <!-- =============== NAVIGATION =============== -->
+            <div class="navButtons">
+                @Html.ActionLink("Calculator", "Index", "Calculator", null, new { @id = "calcbutton" })
+                @Html.ActionLink("Unit Conversion", "Index", "Converter", null, new { @id = "convertbutton" })
+            </div>
+        </div><!--end of navigation-->
+        <!-- =============== PANEL 2 =============== -->
+        <div id="memory" class="memory">
+            <div class="tableDisplay">
+                <div id="expression"></div>
+            </div>
+            <button id="clearMem">Clear Memory</button>
+        </div>
+    </div><!--end of container-->
+
+</body>
+
+</html>

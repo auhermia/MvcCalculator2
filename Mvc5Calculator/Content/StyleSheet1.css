@@ -53,7 +53,7 @@ td {
   height: 40em;
   border-radius: .3em;
   padding-top: 1.5em; }
-  .navigation button {
+  .navigation a, .navigation button {
     border: 0.125em solid #808080;
     border-radius: 1em;
     background-color: #3e3e3e;
@@ -62,7 +62,7 @@ td {
     text-align: center;
     font-size: 1.25em;
     width: 45%; }
-    .navigation button:hover {
+    .navigation a:hover, .navigation button:hover {
       color: #3e3e3e;
       background-color: #808080; }
   .navigation .navButtons {
@@ -157,4 +157,3 @@ td {
     .memory .tableDisplay .table {
       margin: 0 auto;
       overflow-x: hidden; }
-

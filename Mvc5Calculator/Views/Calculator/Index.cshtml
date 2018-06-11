@@ -58,30 +58,11 @@
                         <button id="equal">=</button>
                     </div>
                 </div>
-                <!-- =============== UNIT CONVERTER =============== -->
-                <div id="converter" class="converter">
-                    <select id="type">
-                        <option>Length</option>
-                        <option>Mass</option>
-                        <option>Temperature</option>
-                        <option>Time</option>
-                        <option>Volume</option>
-                    </select>
-                    <!-- From -->
-                    <p>FROM:</p>
-                    <input id="from" type="text" />
-                    <select id="fromUnit"></select>
-                    <!-- To -->
-                    <p>TO:</p>
-                    <input id="to" type="text" />
-                    <select id="toUnit"></select>
-                    <button id="convert_equal">Convert</button>
-                </div>
             </div><!--end of navItem-->
             <!-- =============== NAVIGATION =============== -->
         <div class="navButtons">
-            <button id="calcbutton">Calculator</button>
-            <button id="convertbutton">Unit Conversion</button>
+            @Html.ActionLink("Calculator", "Index", "Calculator", null, new { @id = "calcbutton" })            
+            @Html.ActionLink("Unit Conversion", "Index", "Converter", null, new { @id = "convertbutton" })
         </div>
         </div><!--end of navigation-->
         <!-- =============== PANEL 2 =============== -->

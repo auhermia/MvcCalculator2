@@ -5,11 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using Mvc5Calculator.Models;
-using System.Data.Entity;
-using Mvc5Calculator.Context;
 
-namespace Mvc5Calculator
+namespace MedSocBuilder
 {
     public class MvcApplication : System.Web.HttpApplication
     {
@@ -19,8 +16,6 @@ namespace Mvc5Calculator
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-
-            Database.SetInitializer<CalculatorContext>(new DropCreateDatabaseIfModelChanges<CalculatorContext>());
         }
     }
 }

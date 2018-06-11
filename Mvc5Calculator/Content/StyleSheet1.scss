@@ -89,7 +89,7 @@ td {
     height: 40em;
     border-radius: .3em;
     padding-top: 1.5em;
-    button {
+    a, button {
         @include stdbutton(1.25em, 45%);
     }
     .navButtons{

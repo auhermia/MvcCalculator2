@@ -27,7 +27,7 @@ var runCalcConv = (function () {
         self.clear = $('#clear');
 
         // --------------- Unit Converter ---------------
-        self.type = $('#type');
+        self.unitType = $('#unittype');
         self.isConverter = true; // to determine ClearMemory button action method
         self.convertEqual = $('#convert_equal');
         self.from = $('#from');
@@ -44,6 +44,31 @@ var runCalcConv = (function () {
 
     // unit conversion mapping
     var bindUnitMappingCtrl = function () {
+        //data from the server is like this
+        /**
+        *
+        [
+        {
+            unitType: 'Length',
+            unitName: 'm'
+        },
+        {
+            unitType: 'Area',
+            unitName: 'm2'
+        }
+        ]
+
+        self/.area = [];
+        for(var i = 0; i < self.a; i++) {
+        if(self.a[i]['unitType'] == 'Area') {
+        self.area.push(self.a[i]);
+}
+}
+         * 
+         */
+
+
+
         var self = {};
         self.area = [
             { 'Id': 'm2', 'Property': [1.0, 'Square meter (m^2)'] },
@@ -93,33 +118,33 @@ var runCalcConv = (function () {
     }
 
     /* ================================================ *
-    *                 MAIN NAVIGATION   	            *
+    *             1.  MAIN NAVIGATION   	            *
     * ================================================= */
 
-    // default (show calculator)
+    // Initial app load (show calculator)
     var initLoad = function () {
-        selectorCtrl.calculator.show();
-        selectorCtrl.converter.hide();
+        //selectorCtrl.calculator.show();
+        //selectorCtrl.converter.hide();
         selectorCtrl.isConverter = false
-        calcPartial();
+        calcPartial();                      // load calculator partial view
         updateDisplay();
     }
     // show calculator, hide converter
     var calcLoad = function () {
-        selectorCtrl.calculator.show();
-        selectorCtrl.converter.hide();
+        //selectorCtrl.calculator.show();
+        //selectorCtrl.converter.hide();
         selectorCtrl.isConverter = false;
-        calcPartial();
+        calcPartial();                      // load calculator partial view
     }
     // show converter, hide calculator
     var convLoad = function () {
-        selectorCtrl.calculator.hide();
-        selectorCtrl.converter.show();
+        //selectorCtrl.calculator.hide();
+        //selectorCtrl.converter.show();
         selectorCtrl.isConverter = true;
-        convertPartial();
+        convertPartial();                   // load converter partial view
         appendOption(unitMappingCtrl.length);
     }
-    // Partial View Load function - calculator
+    // Partial View Load function - previous calculations
     var calcPartial = function () {
         $.ajax({
             url: "/Calculator/CalcPartial",
@@ -129,7 +154,7 @@ var runCalcConv = (function () {
             }
         });
     }
-    // Partial View Load function - converter
+    // Partial View Load function - previous conversions
     var convertPartial = function () {
         $.ajax({
             url: "/Converter/ConvertPartial",
@@ -139,7 +164,7 @@ var runCalcConv = (function () {
             }
         });
     }
-    // Clear Memory section
+    // Function to clear Memory section
     var clearMem = function () {
         $.ajax({
             method: "POST",
@@ -149,30 +174,36 @@ var runCalcConv = (function () {
     }
 
     /* ================================================ *
-    *                   CALCULATOR			            *
+    *               2.  CALCULATOR			            *
     * ================================================= */
 
     // define object (see calc.js)
     var calculatorObj = Calculator();
 
-    // refresh display upon each action
+    // refresh display upon each action (below)
     var updateDisplay = function () {
         selectorCtrl.bottomDisplay.text(calculatorObj.currentState());
         selectorCtrl.topDisplay.text(calculatorObj.previousState());
     }
-    // actions
+    /* ========== ACTIONS ========== */
+
+    // when num key is pressed
     var numFunc = function (e) {
         calculatorObj.num($(e.target).text());
     }
+    //  switch between negative or positive value
     var plusMinusFunc = function () {
         calculatorObj.plusMinus();
     }
+    //  delete previous digit
     var backSpaceFunc = function () {
         calculatorObj.backspace();
     }
+    // when + - * / ^ are pressed
     var operatorFunc = function (e) {
         calculatorObj.operator($(e.target).text());
     }
+    // when '=' is pressed.  sends values to controller via Eval()
     var equalFunc = function () {
         calculatorObj.Eval(calculatorObj.getVal2(), calculatorObj.getVal1(), calculatorObj.getOperator());
         // note - AddCalc does not call calcPartial after success because calc.js is loaded first
@@ -184,8 +215,12 @@ var runCalcConv = (function () {
     }
  
     /* ================================================ *
-    *                   UNIT CONVERTER		            *
+    *               3.  UNIT CONVERTER		            *
     * ================================================= */
+
+    // what: referesh unit dropdowns upon selecting a new unit type
+    // how: filter ConverterUnitTables in db  based on unit type
+    
 
     // refresh unit dropdowns upon selecting a new unit type
     var appendOption = function (convert_type) {
@@ -386,7 +421,7 @@ var runCalcConv = (function () {
     }
     
     /* ================================================ *
-    *                       SET UP  		            *
+    *                   4.  SET UP  		            *
     * ================================================= */
 
     // enable all functions when init is called
@@ -407,8 +442,8 @@ var runCalcConv = (function () {
         selectorCtrl.clear.click(clearFunc);
 
         // Converter functions
-        selectorCtrl.type.change(changeUnitType);
-        selectorCtrl.convertEqual.click(convEqualFunc);
+        //selectorCtrl.type.change(changeUnitType);
+        //selectorCtrl.convertEqual.click(convEqualFunc);
 
         // Keypress
         selectorCtrl.document.keypress(keyPress);
@@ -425,5 +460,24 @@ var runCalcConv = (function () {
 })();
 
 $(document).ready(function () {
+    console.log("this runs");
+
+    $('#unitType').change(function () {
+        alert($('#unitType :selected').text());
+    });
+
+    var unitName = $('#unitType :selected').text();
+    $.ajax({
+        method: "GET",
+        async: false,
+        url: "/Converter/FilterUnitTypes",
+        data: "unitName",
+        success: function (result) {
+            // refresh partial view. new conversion will appear
+            alert(result);
+        }
+    })
+
+        
     runCalcConv.init();
 });

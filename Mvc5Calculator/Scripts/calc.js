@@ -8,7 +8,7 @@
     var _currentState = 0;  // bottomDisplay
     var changeHandler;      // update display for currentState and previousState
     var newCalc = true;     // no previous calculation exist on display
-    
+    self
     function change(handler) {
         changeHandler = handler;
     }

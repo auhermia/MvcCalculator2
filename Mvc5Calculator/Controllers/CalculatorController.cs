@@ -7,16 +7,19 @@ using Mvc5Calculator.Models;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Configuration;
+using Mvc5Calculator.Context;
 
 namespace Mvc5Calculator.Controllers
 {
     public class CalculatorController : Controller
     {
-        private CalculatorDBContext db = new CalculatorDBContext();
+        //private CalculatorDBContext db = new CalculatorDBContext();
+        private CalculatorContext db = new CalculatorContext();
 
         // GET: Calculator
         public ActionResult Index()
         {
+
             return View();
         }
 
@@ -60,7 +63,7 @@ namespace Mvc5Calculator.Controllers
             // why specify model?
             //List<Calculator> model = db.Calculator.ToList();
             //return PartialView("CalcPartial", model);
-            return PartialView("CalcPartial", db.Calculator.ToList());
+            return PartialView("CalcPartial", db.Calculators.ToList());
         }
 
         // POST DATA TO DB
@@ -75,7 +78,7 @@ namespace Mvc5Calculator.Controllers
                 calcObj.Operator = Operator;
                 calcObj.Result = Result;
                 
-                db.Calculator.Add(calcObj);
+                db.Calculators.Add(calcObj);
                 db.SaveChanges();
             }
             catch (Exception ex)
@@ -89,7 +92,7 @@ namespace Mvc5Calculator.Controllers
         [HttpPost]
         public ActionResult Delete()
         {
-            db.Calculator.RemoveRange(db.Calculator);
+            db.Calculators.RemoveRange(db.Calculators);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

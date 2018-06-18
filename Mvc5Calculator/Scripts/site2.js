@@ -27,92 +27,15 @@ var runCalcConv = (function () {
         self.clear = $('#clear');
 
         // --------------- Unit Converter ---------------
-        self.unitType = $('#unittype');
+        self.unitType = $('#unitType');
         self.isConverter = true; // to determine ClearMemory button action method
         self.convertEqual = $('#convert_equal');
+        self.fromToUnit = $('#fromUnit, #toUnit');
         self.from = $('#from');
         self.to = $('#to');
 
         // --------------- Memory ---------------
         self.clearMem = $("#clearMem");
-
-        return self;
-    }
-
-    // object to hold all unit conversion mapping
-    var unitMappingCtrl = {};
-
-    // unit conversion mapping
-    var bindUnitMappingCtrl = function () {
-        //data from the server is like this
-        /**
-        *
-        [
-        {
-            unitType: 'Length',
-            unitName: 'm'
-        },
-        {
-            unitType: 'Area',
-            unitName: 'm2'
-        }
-        ]
-
-        self/.area = [];
-        for(var i = 0; i < self.a; i++) {
-        if(self.a[i]['unitType'] == 'Area') {
-        self.area.push(self.a[i]);
-}
-}
-         * 
-         */
-
-
-
-        var self = {};
-        self.area = [
-            { 'Id': 'm2', 'Property': [1.0, 'Square meter (m^2)'] },
-            { 'Id': 'cm2', 'Property': [10000, 'Square centimeter (cm^2)'] },
-            { 'Id': 'km2', 'Property': [0.000001, 'Square kilometer (km^2)'] },
-            { 'Id': 'in2', 'Property': [1550, 'Square inch (in^2)'] },
-            { 'Id': 'ft2', 'Property': [10.7639, 'Square foot (ft^2)'] },
-            { 'Id': 'mi2', 'Property': [3.861e-7, 'Square mile (mi^2)'] },
-            { 'Id': 'acre', 'Property': [0.000247105, 'Acre (acre)'] }
-        ];
-        self.length = [
-            { 'Id': 'm', 'Property': [1.0, 'Meter (m)'] },
-            { 'Id': 'cm', 'Property': [100, 'Centimeter (cm)'] },
-            { 'Id': 'km', 'Property': [.001, 'Kilometer (km)'] },
-            { 'Id': 'in', 'Property': [39.36996, 'Inch (in)'] },
-            { 'Id': 'ft', 'Property': [3.28084, 'Foot (ft)'] },
-            { 'Id': 'yd', 'Property': [1.09361, 'Yard (yd)'] },
-            { 'Id': 'mi', 'Property': [0.000621371, 'Mile (mi)'] }
-        ];
-        self.mass = [
-            { 'Id': 'kg', 'Property': [1.0, 'Kilogram (kg)'] },
-            { 'Id': 'g', 'Property': [1000, 'Gram (g)'] },
-            { 'Id': 'oz', 'Property': [35.274, 'Ounce (oz)'] },
-            { 'Id': 'lb', 'Property': [2.20462, 'Pound (lb)'] },
-            { 'Id': 't', 'Property': [0.00110231, 'Ton (t)'] }
-        ];
-        self.time = [
-            { 'Id': 'day', 'Property': [1.0, 'Day (day)'] },
-            { 'Id': 'hr', 'Property': [24, 'Hour (hr)'] },
-            { 'Id': 'min', 'Property': [1440, 'Minute (min)'] },
-            { 'Id': 'sec', 'Property': [86400, 'Second (sec)'] },
-            { 'Id': 'wk', 'Property': [0.142857, 'Week (wk)'] },
-            { 'Id': 'mo', 'Property': [0.0328767, 'Month (mo)'] },
-            { 'Id': 'yr', 'Property': [0.00273973, 'Year (yr)'] }
-        ];
-        self.volume = [
-            { 'Id': 'l', 'Property': [1.0, 'Liter (L)'] },
-            { 'Id': 'mL', 'Property': [1000, 'Milliliter (mL)'] },
-            { 'Id': 'gal', 'Property': [0.264172, 'Gallon (gal)'] }
-        ];
-        self.temperature = [
-            { 'Id': '\u00B0F', 'Property': [1.0, 'Farenheit (\u00B0F)'] },
-            { 'Id': '\u00B0C', 'Property': [1.0, 'Celcius (\u00B0C)'] }
-        ];
 
         return self;
     }
@@ -123,23 +46,19 @@ var runCalcConv = (function () {
 
     // Initial app load (show calculator)
     var initLoad = function () {
-        //selectorCtrl.calculator.show();
-        //selectorCtrl.converter.hide();
         selectorCtrl.isConverter = false
         calcPartial();                      // load calculator partial view
-        updateDisplay();
+        LoadUnitsIntoDropdown();
+
+        updateDisplay();                       // ------------- WHAT IS THIS FOR AGAIN?????!!!!!!!!! -----#@&^*$
     }
     // show calculator, hide converter
     var calcLoad = function () {
-        //selectorCtrl.calculator.show();
-        //selectorCtrl.converter.hide();
         selectorCtrl.isConverter = false;
         calcPartial();                      // load calculator partial view
     }
     // show converter, hide calculator
     var convLoad = function () {
-        //selectorCtrl.calculator.hide();
-        //selectorCtrl.converter.show();
         selectorCtrl.isConverter = true;
         convertPartial();                   // load converter partial view
         appendOption(unitMappingCtrl.length);
@@ -218,45 +137,37 @@ var runCalcConv = (function () {
     *               3.  UNIT CONVERTER		            *
     * ================================================= */
 
-    // what: referesh unit dropdowns upon selecting a new unit type
-    // how: filter ConverterUnitTables in db  based on unit type
-    
+    // WHAT: Changing unit types
+    var ChangeUnitType = function () {
 
-    // refresh unit dropdowns upon selecting a new unit type
-    var appendOption = function (convert_type) {
+        selectorCtrl.fromToUnit.empty();
+        LoadUnitsIntoDropdown();
+    }
+
+    // WHAT: Refresh unit dropdowns upon selecting a new unit type
+    var LoadUnitsIntoDropdown = function () {
+        
+        let selectedUnitType = $('#unitType :selected').text();
+        console.log(selectedUnitType);
         let fromToUnit = $('#fromUnit, #toUnit');
-        $.each(convert_type, function (i, item) {
-            fromToUnit.append("<option value='" + item.Id + "'>" + item.Property[1] + "</option>");
+
+        $.ajax({
+            type: "POST",
+            url: "/Converter/GetUnitsByType",
+            data: {
+                unitType: selectedUnitType
+            },
+            success: function (units) {
+                console.log(units);
+                $.each(units, function (key, value) {
+                    fromToUnit.append("<option value='" + value.Id + "'>" + value.UnitLongName + "</option>");
+                });
+            }
         });
     }
-    // invoking changes to unit type and unit dropdowns
-    var changeUnitType = function () {
-        let typeVal = selectorCtrl.type.val();
-        let fromToUnit = $('#fromUnit, #toUnit');
-        let fromToInput = $('#from, #to');
 
-        //reset unit dropdown and input to ''
-        fromToUnit.html('');
-        fromToInput.val('');
+    var DoConversion = function () {
 
-        // display appropriate units when unit type is selected
-        if (typeVal === "Mass") {
-            appendOption(unitMappingCtrl.mass);
-        } else if (typeVal === "Temperature") {
-            appendOption(unitMappingCtrl.temperature);
-        } else if (typeVal === "Time") {
-            appendOption(unitMappingCtrl.time);
-        } else if (typeVal === "Volume") {
-            appendOption(unitMappingCtrl.volume);
-        } else if (typeVal === "Area") {
-            appendOption(unitMappingCtrl.area);
-        } else {
-            appendOption(unitMappingCtrl.length);
-        }
-    }
-
-    var convEqualFunc = function () {
-        let typeVal = selectorCtrl.type.val();
         let fromUnit = document.getElementById("fromUnit").value;
         let toUnit   = document.getElementById("toUnit").value;
         let fromValueRaw = document.getElementById("from").value;
@@ -267,96 +178,18 @@ var runCalcConv = (function () {
         let fromValue = fromValueRaw.match(pattern);
         (fromValue === '') ? selectorCtrl.to.val("Syntax Error") : fromValue = parseFloat(fromValue);
 
-        // length
-        if (typeVal === "Length") {
-            // find unit ID in array based on fromUnit
-            var fromCoeff = unitMappingCtrl.length.filter(function (unit) {
-                return (unit.Id === fromUnit);
-                //  find coefficient based on unit ID
-            }).map(function (unit) {
-                return (unit.Property[0]);
-            });
-
-            var toCoeff = unitMappingCtrl.length.filter(function (unit) {
-                return (unit.Id === toUnit);
-            }).map(function (unit) {
-                return unit.Property[0];
-            });
-        }
-        // area
-        else if (typeVal === "Area") {
-            var fromCoeff = unitMappingCtrl.area.filter(function (unit) {
-                return (unit.Id === fromUnit);
-            }).map(function (unit) {
-                return (unit.Property[0]);
-            });
-
-            var toCoeff = unitMappingCtrl.area.filter(function (unit) {
-                return (unit.Id === toUnit);
-            }).map(function (unit) {
-                return unit.Property[0];
-            });
-        }
-        // mass
-        else if (typeVal === "Mass") {
-            var fromCoeff = unitMappingCtrl.mass.filter(function (unit) {
-                return (unit.Id === fromUnit);
-            }).map(function (unit) {
-                return (unit.Property[0]);
-            });
-
-            var toCoeff = unitMappingCtrl.mass.filter(function (unit) {
-                return (unit.Id == toUnit);
-            }).map(function (unit) {
-                return unit.Property[0];
-            });
-        }
-        // time
-        else if (typeVal === "Time") {
-            var fromCoeff = unitMappingCtrl.time.filter(function (unit) {
-                return (unit.Id === fromUnit);
-            }).map(function (unit) {
-                return (unit.Property[0]);
-            });
-
-            var toCoeff = unitMappingCtrl.time.filter(function (unit) {
-                return (unit.Id === toUnit);
-            }).map(function (unit) {
-                return unit.Property[0];
-            });
-        }
-        // volume
-        else if (typeVal === "Volume") {
-            var fromCoeff = unitMappingCtrl.volume.filter(function (unit) {
-                return (unit.Id === fromUnit);
-            }).map(function (unit) {
-                return (unit.Property[0]);
-            });
-
-            var toCoeff = unitMappingCtrl.volume.filter(function (unit) {
-                return (unit.Id == toUnit);
-            }).map(function (unit) {
-                return unit.Property[0];
-            });
-        }
-        // temperature
-        else {
-            // note - equations not linearly scaled.  equations in controller
-            var toCoeff = 1;
-            var fromCoeff = 1;
-        }
-        // Make ajax call
-        Convert(fromUnit, fromValue, fromCoeff, toUnit, toCoeff);
+        // send to controller to do conversions
+        Convert(fromUnit, fromValue, toUnit);
     }
 
     // Ajax call to controller to perform conversion
-    var Convert = function (fromUnit, fromValue, fromCoeff, toUnit, toCoeff) {
+    var Convert = function (fromUnit, fromValue, toUnit) {
+        //console.log()
         $.ajax({
             method: "POST",
             url: "/Converter/Convert",
             data: {
-                FromUnit: fromUnit, FromValue: fromValue, FromCoeff: fromCoeff,
-                ToUnit: toUnit, ToCoeff: toCoeff
+                FromUnit: fromUnit, FromValue: fromValue, ToUnit: toUnit
             },
             success: function (result) {
                 let toValue = result;
@@ -366,7 +199,7 @@ var runCalcConv = (function () {
             error: function () {
                 selectorCtrl.to.val("Syntax Error");
             }
-        })
+        });
     }
     // Ajax call to save conversion to db
     var AddConvert = function (toValue, fromValue, toUnit, fromUnit) {
@@ -381,7 +214,7 @@ var runCalcConv = (function () {
                 // refresh partial view. new conversion will appear
                 convertPartial();
             }
-        })
+        });
     }
 
     // --------------- Enable keyboard input ---------------
@@ -442,15 +275,16 @@ var runCalcConv = (function () {
         selectorCtrl.clear.click(clearFunc);
 
         // Converter functions
-        //selectorCtrl.type.change(changeUnitType);
-        //selectorCtrl.convertEqual.click(convEqualFunc);
+        
+        selectorCtrl.unitType.change(ChangeUnitType);
+        selectorCtrl.convertEqual.click(DoConversion);
 
         // Keypress
         selectorCtrl.document.keypress(keyPress);
     }
     var init = function () {
         selectorCtrl = bindSelectorCtrl();
-        unitMappingCtrl = bindUnitMappingCtrl();
+        //unitMappingCtrl = bindUnitMappingCtrl();
         bindFunctions();
     }
     return {
@@ -460,24 +294,36 @@ var runCalcConv = (function () {
 })();
 
 $(document).ready(function () {
+
+    runCalcConv.init();
     console.log("this runs");
 
-    $('#unitType').change(function () {
-        alert($('#unitType :selected').text());
-    });
+    // Changing unit type dropdown
+    //$('#unitType').change(function () {
 
-    var unitName = $('#unitType :selected').text();
-    $.ajax({
-        method: "GET",
-        async: false,
-        url: "/Converter/FilterUnitTypes",
-        data: "unitName",
-        success: function (result) {
-            // refresh partial view. new conversion will appear
-            alert(result);
-        }
-    })
-
+    //    // to do: remove existing units from units dropdown
+    //    $('#fromUnit, #toUnit').empty();
         
-    runCalcConv.init();
+    //    var selectedUnitType = $('#unitType :selected').text();
+
+
+    //    //ajax call to render units of the specific unit type
+    //    var LoadUnitsIntoDropdown2 = function () {
+    //        $.ajax({
+    //            type: "POST",
+    //            url: "/Converter/GetUnitsByType",
+    //            data: {
+    //                unitType: selectedUnitType
+    //            },
+    //            success: function (units) {
+    //                console.log("this returned something");
+    //                $.each(units, function (key, value) {
+    //                    $('#fromUnit, #toUnit').append("<option value='" + value.Id + "'>" + value.UnitLongName + "</option>");
+    //                });
+    //            }
+
+    //        });
+    //    }
+        
+    //});    
 });

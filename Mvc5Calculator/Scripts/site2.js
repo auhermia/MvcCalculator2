@@ -61,7 +61,6 @@ var runCalcConv = (function () {
     var convLoad = function () {
         selectorCtrl.isConverter = true;
         convertPartial();                   // load converter partial view
-        appendOption(unitMappingCtrl.length);
     }
     // Partial View Load function - previous calculations
     var calcPartial = function () {
@@ -98,7 +97,7 @@ var runCalcConv = (function () {
 
     // define object (see calc.js)
     var calculatorObj = Calculator();
-
+    
     // refresh display upon each action (below)
     var updateDisplay = function () {
         selectorCtrl.bottomDisplay.text(calculatorObj.currentState());
@@ -148,7 +147,6 @@ var runCalcConv = (function () {
     var LoadUnitsIntoDropdown = function () {
         
         let selectedUnitType = $('#unitType :selected').text();
-        console.log(selectedUnitType);
         let fromToUnit = $('#fromUnit, #toUnit');
 
         $.ajax({
@@ -167,13 +165,14 @@ var runCalcConv = (function () {
     }
 
     var DoConversion = function () {
+        
+        let fromUnit = $('#fromUnit :selected').text();
+        let toUnit = $('#toUnit :selected').text();
 
-        let fromUnit = document.getElementById("fromUnit").value;
-        let toUnit   = document.getElementById("toUnit").value;
-        let fromValueRaw = document.getElementById("from").value;
-        /*  Regex - throw error if entered value does not match accepted pattern     *
+        /*  REGEX - throw error if entered value does not match accepted pattern     *
         *   ^ (beginning of input) -? (optional negative) \d* (0-9 0 or more times)  *
         *   \.? (optional decimal) d+ (0-9 1 or more times) $ (end of input)         */
+        let fromValueRaw = document.getElementById("from").value;
         let pattern = /^-?\d*\.?\d+$/;
         let fromValue = fromValueRaw.match(pattern);
         (fromValue === '') ? selectorCtrl.to.val("Syntax Error") : fromValue = parseFloat(fromValue);
@@ -194,7 +193,8 @@ var runCalcConv = (function () {
             success: function (result) {
                 let toValue = result;
                 selectorCtrl.to.val(toValue);
-                AddConvert(toValue, fromValue, toUnit, fromUnit);
+                console.log(result);
+                //AddConvert(toValue, fromValue, toUnit, fromUnit);
             },
             error: function () {
                 selectorCtrl.to.val("Syntax Error");
@@ -284,7 +284,6 @@ var runCalcConv = (function () {
     }
     var init = function () {
         selectorCtrl = bindSelectorCtrl();
-        //unitMappingCtrl = bindUnitMappingCtrl();
         bindFunctions();
     }
     return {
@@ -296,34 +295,5 @@ var runCalcConv = (function () {
 $(document).ready(function () {
 
     runCalcConv.init();
-    console.log("this runs");
 
-    // Changing unit type dropdown
-    //$('#unitType').change(function () {
-
-    //    // to do: remove existing units from units dropdown
-    //    $('#fromUnit, #toUnit').empty();
-        
-    //    var selectedUnitType = $('#unitType :selected').text();
-
-
-    //    //ajax call to render units of the specific unit type
-    //    var LoadUnitsIntoDropdown2 = function () {
-    //        $.ajax({
-    //            type: "POST",
-    //            url: "/Converter/GetUnitsByType",
-    //            data: {
-    //                unitType: selectedUnitType
-    //            },
-    //            success: function (units) {
-    //                console.log("this returned something");
-    //                $.each(units, function (key, value) {
-    //                    $('#fromUnit, #toUnit').append("<option value='" + value.Id + "'>" + value.UnitLongName + "</option>");
-    //                });
-    //            }
-
-    //        });
-    //    }
-        
-    //});    
 });

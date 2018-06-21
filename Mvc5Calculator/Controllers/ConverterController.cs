@@ -52,10 +52,6 @@ namespace Mvc5Calculator.Controllers
             double toValue = 0;
 
             // grab coefficients and intercept from db table
-
-            //var fromCoefficient = from m in db.ConverterUnitTables
-            //                      where m.UnitLongName == fromUnit
-            //                      select m.Coefficient;
             var fromCoefficient = (from m in db.ConverterUnitTables
                                   where m.UnitLongName == fromUnit
                                   select m.Coefficient).SingleOrDefault();

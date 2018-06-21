@@ -13,8 +13,8 @@ var runCalcConv = (function () {
         // --------------- Main Navigation ---------------
         self.calculator = $('#calculator');
         self.converter = $('#converter');
-        self.calcbutton = $('#calcbutton');
-        self.convertbutton = $('#convertbutton');
+        self.calcbutton = $('#calcButton');
+        self.convertbutton = $('#convertButton');
 
         // --------------- Calculator ---------------
         self.topDisplay = $("#topdisplay");
@@ -54,11 +54,13 @@ var runCalcConv = (function () {
     }
     // show calculator, hide converter
     var calcLoad = function () {
+        console.log("CALCULATOR");
         selectorCtrl.isConverter = false;
         calcPartial();                      // load calculator partial view
     }
     // show converter, hide calculator
     var convLoad = function () {
+        console.log("Converter");
         selectorCtrl.isConverter = true;
         convertPartial();                   // load converter partial view
     }
@@ -169,9 +171,9 @@ var runCalcConv = (function () {
         let fromUnit = $('#fromUnit :selected').text();
         let toUnit = $('#toUnit :selected').text();
 
-        /*  REGEX - throw error if entered value does not match accepted pattern     *
-        *   ^ (beginning of input) -? (optional negative) \d* (0-9 0 or more times)  *
-        *   \.? (optional decimal) d+ (0-9 1 or more times) $ (end of input)         */
+        /*  Regular expressions - throw error if entered value does not match accepted pattern     *
+        *   ^ (beginning of input) -? (optional negative) \d* (0-9 0 or more times)                *
+        *   \.? (optional decimal) d+ (0-9 1 or more times) $ (end of input)                       */
         let fromValueRaw = document.getElementById("from").value;
         let pattern = /^-?\d*\.?\d+$/;
         let fromValue = fromValueRaw.match(pattern);
@@ -274,8 +276,7 @@ var runCalcConv = (function () {
         selectorCtrl.equal.click(equalFunc);
         selectorCtrl.clear.click(clearFunc);
 
-        // Converter functions
-        
+        // Converter functions        
         selectorCtrl.unitType.change(ChangeUnitType);
         selectorCtrl.convertEqual.click(DoConversion);
 

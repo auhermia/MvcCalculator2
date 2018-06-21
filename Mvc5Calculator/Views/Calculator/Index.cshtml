@@ -17,7 +17,7 @@
 </head>
 
 <body>
-    <div class="container">
+    <div id="container" class="container">
         <!-- =============== PANEL 1 =============== -->
         <div class="navigation">
             <div class="navItem">
@@ -60,14 +60,15 @@
                 </div>
             </div><!--end of navItem-->
             <!-- =============== NAVIGATION =============== -->
-        <div class="navButtons">
-            @Html.ActionLink("Calculator", "Index", "Calculator", null, new { @id = "calcbutton" })            
-            @Html.ActionLink("Unit Conversion", "Index", "Converter", null, new { @id = "convertbutton" })
+        <div class="navButtons">   
+            @Html.ActionLink("Calculator", "Index", "Calculator", null, new { @id = "calcButton" })
+            @Html.ActionLink("Unit Conversion", "Index", "Converter", null, new { @id = "convertButton" })
         </div>
         </div><!--end of navigation-->
         <!-- =============== PANEL 2 =============== -->
         <div id="memory" class="memory">
             <div class="tableDisplay">
+                
                 <div id="expression"></div>
             </div>
             <button id="clearMem">Clear Memory</button>

@@ -53,14 +53,21 @@ namespace Mvc5Calculator.Controllers
 
             // grab coefficients and intercept from db table
             var fromCoefficient = (from m in db.ConverterUnitTables
-                                  where m.UnitLongName == fromUnit
-                                  select m.Coefficient).SingleOrDefault();
-            var fromIntercept = (from m in db.ConverterUnitTables
-                                where m.UnitLongName == fromUnit
-                                select m.Intercept).SingleOrDefault();
+                                   where m.UnitLongName == fromUnit
+                                   select m.Coefficient).SingleOrDefault();
             var toCoefficient = (from m in db.ConverterUnitTables
-                                where m.UnitLongName == toUnit
-                                select m.Coefficient).SingleOrDefault();
+                                 where m.UnitLongName == toUnit
+                                 select m.Coefficient).SingleOrDefault();
+            var fromIntercept = (from m in db.ConverterUnitTables
+                                 where m.UnitLongName == fromUnit
+                                 select m.Intercept).SingleOrDefault();
+            var fromUnitShort = (from m in db.ConverterUnitTables
+                                 where m.UnitLongName == fromUnit
+                                 select m.UnitName).SingleOrDefault();
+            var toUnitShort = (from m in db.ConverterUnitTables
+                               where m.UnitLongName == toUnit
+                               select m.UnitName).SingleOrDefault();
+
             /* 
              * note - all conversions are linearly scaled, so basic linear equation can be used
              * y = mx + b
@@ -75,15 +82,15 @@ namespace Mvc5Calculator.Controllers
             System.Diagnostics.Debug.WriteLine("test test test!!!!");
             System.Diagnostics.Debug.WriteLine(fromCoefficient);
 
-            return Json(toValue);
-            //return Json(toValue);
+            var result = new { toValue = toValue, fromUnitShort = fromUnitShort, toUnitShort = toUnitShort };
 
+            return Json(result);
         }
 
         // 3.  Retrieve values from db and sends to PartialView
         public PartialViewResult ConvertPartial()
         {
-            return PartialView("ConvertPartial", db.Converters.ToList());
+            return PartialView("_Converter", db.Converters.ToList());
         }
 
         // 4.  Save to DB

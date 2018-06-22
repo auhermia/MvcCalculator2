@@ -28,14 +28,14 @@ var runCalcConv = (function () {
 
         // --------------- Unit Converter ---------------
         self.unitType = $('#unitType');
-        self.isConverter = true; // to determine ClearMemory button action method
         self.convertEqual = $('#convert_equal');
         self.fromToUnit = $('#fromUnit, #toUnit');
-        self.from = $('#from');
-        self.to = $('#to');
+        self.fromToInput = $('#from, #to');
+        self.toInput = $('#to');
 
         // --------------- Memory ---------------
-        self.clearMem = $("#clearMem");
+        self.expression = $("#expression");
+        self.clearMem = $(".clearMem");
 
         return self;
     }
@@ -46,31 +46,18 @@ var runCalcConv = (function () {
 
     // Initial app load (show calculator)
     var initLoad = function () {
-        selectorCtrl.isConverter = false
-        calcPartial();                      // load calculator partial view
         LoadUnitsIntoDropdown();
 
         updateDisplay();                       // ------------- WHAT IS THIS FOR AGAIN?????!!!!!!!!! -----#@&^*$
     }
-    // show calculator, hide converter
-    var calcLoad = function () {
-        console.log("CALCULATOR");
-        selectorCtrl.isConverter = false;
-        calcPartial();                      // load calculator partial view
-    }
-    // show converter, hide calculator
-    var convLoad = function () {
-        console.log("Converter");
-        selectorCtrl.isConverter = true;
-        convertPartial();                   // load converter partial view
-    }
+
     // Partial View Load function - previous calculations
     var calcPartial = function () {
         $.ajax({
             url: "/Calculator/CalcPartial",
             type: "GET",
             success: function (result) {
-                $("#expression").html(result);
+                selectorCtrl.expression.html(result);
             }
         });
     }
@@ -80,16 +67,18 @@ var runCalcConv = (function () {
             url: "/Converter/ConvertPartial",
             type: "GET",
             success: function (result) {
-                $("#expression").html(result);
+                selectorCtrl.expression.html(result);
             }
         });
     }
-    // Function to clear Memory section
+
+    // Function to clear Memory section, determined by button Id
     var clearMem = function () {
+        let self = $(this);
         $.ajax({
             method: "POST",
-            url: (selectorCtrl.isConverter === true) ? "/Converter/Delete" : "/Calculator/Delete",
-            success: (selectorCtrl.isConverter === true) ? convertPartial() : calcPartial()
+            url: (self.attr('id') == "convertClearMem") ? "/Converter/Delete" : "/Calculator/Delete",
+            success: (self.attr('id') == "convertClearMem") ? convertPartial() : calcPartial()
         });
     }
 
@@ -140,8 +129,8 @@ var runCalcConv = (function () {
 
     // WHAT: Changing unit types
     var ChangeUnitType = function () {
-
         selectorCtrl.fromToUnit.empty();
+        selectorCtrl.fromToInput.empty();
         LoadUnitsIntoDropdown();
     }
 
@@ -158,7 +147,6 @@ var runCalcConv = (function () {
                 unitType: selectedUnitType
             },
             success: function (units) {
-                console.log(units);
                 $.each(units, function (key, value) {
                     fromToUnit.append("<option value='" + value.Id + "'>" + value.UnitLongName + "</option>");
                 });
@@ -193,10 +181,11 @@ var runCalcConv = (function () {
                 FromUnit: fromUnit, FromValue: fromValue, ToUnit: toUnit
             },
             success: function (result) {
-                let toValue = result;
-                selectorCtrl.to.val(toValue);
-                console.log(result);
-                //AddConvert(toValue, fromValue, toUnit, fromUnit);
+                let toValue = result.toValue;
+                let fromUnitShort = result.fromUnitShort;
+                let toUnitShort = result.toUnitShort;
+                selectorCtrl.toInput.val(toValue);
+                AddConvert(toValue, fromValue, toUnitShort, fromUnitShort);
             },
             error: function () {
                 selectorCtrl.to.val("Syntax Error");
@@ -263,8 +252,6 @@ var runCalcConv = (function () {
     var bindFunctions = function () {
         // Loading Views
         initLoad();                 // --------- can i just do it here?
-        selectorCtrl.calcbutton.click(calcLoad);
-        selectorCtrl.convertbutton.click(convLoad);
         selectorCtrl.clearMem.click(clearMem);
 
         // Calulator functions
@@ -298,3 +285,7 @@ $(document).ready(function () {
     runCalcConv.init();
 
 });
+
+// to do
+// empty input when unit type changes
+// rounding...

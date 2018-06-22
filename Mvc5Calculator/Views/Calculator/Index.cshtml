@@ -68,10 +68,10 @@
         <!-- =============== PANEL 2 =============== -->
         <div id="memory" class="memory">
             <div class="tableDisplay">
-                
+                @Html.Action("CalcPartial", "Calculator")
                 <div id="expression"></div>
             </div>
-            <button id="clearMem">Clear Memory</button>
+            <button id="calcClearMem" class="clearMem">Clear Memory</button>
         </div>
     </div><!--end of container-->
     

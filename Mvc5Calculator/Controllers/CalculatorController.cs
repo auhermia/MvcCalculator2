@@ -60,10 +60,10 @@ namespace Mvc5Calculator.Controllers
         // Refresh calculations table
         public PartialViewResult CalcPartial()
         {
-            // why specify model?
+            // why specify model? --- viewmodel??
             //List<Calculator> model = db.Calculator.ToList();
             //return PartialView("CalcPartial", model);
-            return PartialView("CalcPartial", db.Calculators.ToList());
+            return PartialView("_Calculator", db.Calculators.ToList());
         }
 
         // POST DATA TO DB

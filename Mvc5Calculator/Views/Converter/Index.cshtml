@@ -1,9 +1,7 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Converter";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 
 <!DOCTYPE html>
 <html>
@@ -14,7 +12,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
     <script src="~/Scripts/calc.js"></script>
-    @*<script src="~/Scripts/site2.js"></script>*@
+    <script src="~/Scripts/site2.js"></script>
     <title>Converter</title>
 </head>
 
@@ -39,34 +37,44 @@
             </div><!--end of navItem-->
             <!-- =============== NAVIGATION =============== -->
             <div class="navButtons">
-                @*@Ajax.ActionLink("Calculator", "Index", "Calculator", null,
-                new AjaxOptions
-                {
-                    HttpMethod = "GET",
-                    InsertionMode = InsertionMode.Replace,
-                    UpdateTargetId = "container"
-                })
-                @Ajax.ActionLink("Unit Conversion", "Index", "Converter", null,
-                new AjaxOptions
-                {
-                    HttpMethod = "GET",
-                    InsertionMode = InsertionMode.Replace,
-                    UpdateTargetId = "container"
-                })*@
                 @Html.ActionLink("Calculator", "Index", "Calculator", null, new { @id = "calcbutton" })
                 @Html.ActionLink("Unit Conversion", "Index", "Converter", null, new { @id = "convertbutton" })
-                
             </div>
         </div><!--end of navigation-->
         <!-- =============== PANEL 2 =============== -->
-        <div id="memory" class="memory">
+        <div id="memory" class="memory"> 
             <div class="tableDisplay">
+                @Html.Action("ConvertPartial", "Converter")
                 <div id="expression"></div>
             </div>
-            <button id="clearMem">Clear Memory</button>
+            <button id="convertClearMem" class="clearMem">Clear Memory</button>
         </div>
     </div><!--end of container-->
 
 </body>
 
 </html>
+
+@* graveyard
+
+    @Ajax.ActionLink("Calculator", "Index", "Calculator", null,
+                new AjaxOptions
+                {
+                    HttpMethod = "GET",
+                    InsertionMode = InsertionMode.Replace,
+                    UpdateTargetId = "container"
+                })
+@Ajax.ActionLink("Unit Conversion", "Index", "Converter", null,
+                new AjaxOptions
+                {
+                    HttpMethod = "GET",
+                    InsertionMode = InsertionMode.Replace,
+                    UpdateTargetId = "container"
+                })
+    
+    
+    
+    
+*@
+
+

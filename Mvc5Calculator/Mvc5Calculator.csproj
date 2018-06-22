@@ -226,8 +226,8 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Calculator\Index.cshtml" />
-    <Content Include="Views\Calculator\CalcPartial.cshtml" />
-    <Content Include="Views\Converter\ConvertPartial.cshtml" />
+    <Content Include="Views\Calculator\_Calculator.cshtml" />
+    <Content Include="Views\Converter\_Converter.cshtml" />
     <Content Include="Views\Converter\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>

@@ -1,7 +1,27 @@
 ﻿
-@model IEnumerable<Mvc5Calculator.Models.Converter>
 
 <link href="~/Content/StyleSheet1.css" rel="stylesheet" />
+@*@model Mvc5Calculator.Models.Converter
+
+
+<tr id="convexp">
+    <td>
+        @Html.DisplayFor(modelItem => Model.FromValue)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => Model.FromUnit)
+    </td>
+    <td> = </td>
+    <td>
+        @Html.DisplayFor(modelItem => Model.ToValue)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => Model.ToUnit)
+    </td>
+</tr>*@
+
+@model IEnumerable<Mvc5Calculator.Models.Converter>
+
 <table>
     @foreach (var item in Model)
     {
